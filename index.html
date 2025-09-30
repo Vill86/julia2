@@ -3,138 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Юлия - Психолог, Сексолог, Телесный терапевт</title>
-    <meta name="description" content="Профессиональный психолог, сексолог и телесный терапевт. Помощь при тревоге, депрессии, проблемах в отношениях. Онлайн и офлайн консультации.">
-    
-    <!-- Стили -->
-    <link rel="stylesheet" href="css/styles.css">
-    
-    <!-- Дополнительные стили для уменьшения фото -->
-    <style>
-        .hero-image,
-        .image-container {
-            max-width: 250px !important;
-            margin: 0 auto !important;
-        }
-        
-        .main-photo,
-        img[alt*="Юлия"],
-        .hero img {
-            max-width: 250px !important;
-            width: 100% !important;
-            height: auto !important;
-            display: block !important;
-            border-radius: 50%;
-            border: 5px solid rgba(255,255,255,0.3);
-        }
-        
-        @media (max-width: 768px) {
-            .hero-image,
-            .image-container,
-            .main-photo,
-            .hero img {
-                max-width: 180px !important;
-            }
-        }
-    </style>
+    <title>Юлия - Психолог, Сексолог, Энерготерапевт</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Навигация -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <span class="logo-text">Юлия</span>
-                <span class="logo-subtitle">психолог • сексолог</span>
-            </div>
+    <!-- Шапка -->
+    <header>
+        <nav class="container">
+            <div class="logo">Юлия</div>
             <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Главная</a></li>
-                <li><a href="#about" class="nav-link">Обо мне</a></li>
-                <li><a href="#services" class="nav-link">Услуги</a></li>
-                <li><a href="#approach" class="nav-link">Методы</a></li>
-                <li><a href="#testimonials" class="nav-link">Отзывы</a></li>
-                <li><a href="#contact" class="nav-link">Контакты</a></li>
+                <li><a href="#about">Обо мне</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#reviews">Отзывы</a></li>
+                <li><a href="#contact">Контакты</a></li>
             </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+            <button class="cta-button" onclick="scrollToContact()">Записаться</button>
+        </nav>
+    </header>
 
     <!-- Главный экран -->
-    <section id="home" class="hero">
-        <div class="hero-container">
+    <section class="hero">
+        <div class="container">
             <div class="hero-content">
-                <div class="hero-text animate-text">
-                    <h1 class="hero-title">Юлия</h1>
-                    <h2 class="hero-subtitle">Психолог • Сексолог • Телесный терапевт</h2>
-                    
-                    <p class="hero-description">
-                        Помогу вам обрести внутреннюю гармонию, улучшить качество отношений 
-                        и раскрыть потенциал вашего тела через профессиональную психологическую помощь
-                    </p>
-                    
-                    <div class="hero-buttons">
-                        <a href="#contact" class="btn btn-primary">Записаться на консультацию</a>
-                        <a href="#services" class="btn btn-outline">Узнать о услугах</a>
-                    </div>
+                <div class="hero-text">
+                    <h1>Юлия Иванова</h1>
+                    <p class="subtitle">Психолог • Сексолог • Энерготерапевт • Телесный терапевт</p>
+                    <p class="experience">Стаж работы: 7 лет</p>
+                    <button class="primary-button" onclick="scrollToContact()">Записаться на консультацию</button>
                 </div>
-                
-                <div class="hero-image animate-image">
-                    <div class="image-container">
-                        <img src="https://via.placeholder.com/250x250/9c88ff/ffffff?text=Юлия" 
-                             alt="Психолог Юлия" 
-                             class="main-photo">
-                    </div>
+                <div class="hero-image">
+                    <img src="photo.jpg" alt="Юлия - психолог" class="profile-photo">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- О себе -->
+    <!-- Обо мне -->
     <section id="about" class="about">
         <div class="container">
-            <h2 class="section-title">Обо мне</h2>
-            <div class="section-subtitle">Профессиональная помощь с заботой о вас</div>
-            
-            <div class="about-content-simple">
-                <h3>Образование и квалификация</h3>
-                <div class="qualification-list">
-                    <div class="qualification-item">
-                        <span class="icon">🎓</span>
-                        <div>
-                            <h4>Высшее психологическое образование</h4>
-                            <p>МГУ им. М.В. Ломоносова, клиническая психология</p>
-                        </div>
-                    </div>
-                    <div class="qualification-item">
-                        <span class="icon">💝</span>
-                        <div>
-                            <h4>Сертифицированный сексолог</h4>
-                            <p>Институт современной сексологии и психотерапии</p>
-                        </div>
-                    </div>
-                    <div class="qualification-item">
-                        <span class="icon">🤸</span>
-                        <div>
-                            <h4>Телесно-ориентированный терапевт</h4>
-                            <p>Международная школа телесных практик</p>
-                        </div>
-                    </div>
-                    <div class="qualification-item">
-                        <span class="icon">👥</span>
-                        <div>
-                            <h4>Специализация в парной терапии</h4>
-                            <p>Метод эмоционально-фокусированной терапии (EFT)</p>
-                        </div>
-                    </div>
+            <h2>Обо мне</h2>
+            <p class="about-text">
+                Помогаю людям обрести гармонию с собой и окружающим миром. 
+                Работаю с индивидуальными запросами, семейными и сексуальными отношениями, 
+                психосоматикой и энергетическими блоками. Использую интегративный подход, 
+                сочетающий классическую психологию, телесно-ориентированную терапию и энергопрактики.
+            </p>
+            <div class="credentials">
+                <div class="credential-item">
+                    <h3>Образование</h3>
+                    <p>Высшее психологическое образование, сертифицированный специалист</p>
                 </div>
-                
-                <p class="about-philosophy">
-                    <em>"Я верю, что каждый человек обладает внутренними ресурсами для позитивных изменений. 
-                    Моя задача - создать безопасное пространство и помочь вам найти ваш уникальный путь к гармонии и счастью."</em>
-                </p>
+                <div class="credential-item">
+                    <h3>Специализация</h3>
+                    <p>Интегративный подход в психотерапии</p>
+                </div>
+                <div class="credential-item">
+                    <h3>Опыт</h3>
+                    <p>Более 1000 успешных консультаций</p>
+                </div>
             </div>
         </div>
     </section>
@@ -142,311 +68,99 @@
     <!-- Услуги -->
     <section id="services" class="services">
         <div class="container">
-            <h2 class="section-title">Услуги</h2>
-            <div class="section-subtitle">Выберите подходящий формат работы</div>
-            
-            <div class="services-tabs">
-                <button class="tab-btn active" data-tab="individual">Индивидуальная терапия</button>
-                <button class="tab-btn" data-tab="couple">Парная терапия</button>
-                <button class="tab-btn" data-tab="sexology">Сексология</button>
-                <button class="tab-btn" data-tab="body">Телесная терапия</button>
-            </div>
-            
-            <div class="tab-content active" id="individual">
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon">🧠</div>
-                        <h3>Работа с тревогой и стрессом</h3>
-                        <p class="service-description">
-                            Освоите техники управления тревожностью, научитесь справляться со стрессом
-                        </p>
-                        <ul class="service-features">
-                            <li>Техники релаксации</li>
-                            <li>Работа с паническими атаками</li>
-                            <li>Управление эмоциями</li>
-                        </ul>
-                        <div class="service-footer">
-                            <span class="service-duration">60 минут</span>
-                            <span class="service-price">5000 ₽</span>
-                        </div>
-                        <button class="btn-book" data-service="Работа с тревогой">Записаться</button>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">💭</div>
-                        <h3>Депрессия и апатия</h3>
-                        <p class="service-description">
-                            Поможем вернуть радость жизни и найти внутренние ресурсы для восстановления
-                        </p>
-                        <ul class="service-features">
-                            <li>Когнитивная терапия</li>
-                            <li>Поиск смыслов</li>
-                            <li>Активация ресурсов</li>
-                        </ul>
-                        <div class="service-footer">
-                            <span class="service-duration">60 минут</span>
-                            <span class="service-price">5000 ₽</span>
-                        </div>
-                        <button class="btn-book" data-service="Депрессия">Записаться</button>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">🎯</div>
-                        <h3>Самооценка и уверенность</h3>
-                        <p class="service-description">
-                            Работа с самопринятием, развитие уверенности в себе
-                        </p>
-                        <ul class="service-features">
-                            <li>Работа с критическим голосом</li>
-                            <li>Техники самоподдержки</li>
-                            <li>Развитие self-compassion</li>
-                        </ul>
-                        <div class="service-footer">
-                            <span class="service-duration">60 минут</span>
-                            <span class="service-price">5000 ₽</span>
-                        </div>
-                        <button class="btn-book" data-service="Самооценка">Записаться</button>
-                    </div>
+            <h2>Услуги</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Психологическое консультирование</h3>
+                    <p>Работа с тревогой, стрессом, депрессией, самооценкой и личностным ростом</p>
                 </div>
-            </div>
-            
-            <div class="tab-content" id="couple">
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon">💑</div>
-                        <h3>Парное консультирование</h3>
-                        <p class="service-description">
-                            Помощь парам в решении конфликтов и улучшении взаимопонимания
-                        </p>
-                        <ul class="service-features">
-                            <li>Улучшение коммуникации</li>
-                            <li>Решение конфликтов</li>
-                            <li>Восстановление близости</li>
-                        </ul>
-                        <div class="service-footer">
-                            <span class="service-duration">90 минут</span>
-                            <span class="service-price">7000 ₽</span>
-                        </div>
-                        <button class="btn-book" data-service="Парная терапия">Записаться</button>
-                    </div>
+                <div class="service-card">
+                    <h3>Сексология</h3>
+                    <p>Консультирование по вопросам интимной жизни, сексуальных дисфункций и отношений</p>
                 </div>
-            </div>
-            
-            <div class="tab-content" id="sexology">
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon">💝</div>
-                        <h3>Сексологическое консультирование</h3>
-                        <p class="service-description">
-                            Деликатная работа с вопросами сексуальности и интимности
-                        </p>
-                        <ul class="service-features">
-                            <li>Работа с либидо</li>
-                            <li>Сексуальные блоки</li>
-                            <li>Гармонизация интимной жизни</li>
-                        </ul>
-                        <div class="service-footer">
-                            <span class="service-duration">60 минут</span>
-                            <span class="service-price">5500 ₽</span>
-                        </div>
-                        <button class="btn-book" data-service="Сексология">Записаться</button>
-                    </div>
+                <div class="service-card">
+                    <h3>Энерготерапия</h3>
+                    <p>Работа с энергетическими блоками, восстановление энергетического баланса</p>
                 </div>
-            </div>
-            
-            <div class="tab-content" id="body">
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon">🤸</div>
-                        <h3>Телесная терапия</h3>
-                        <p class="service-description">
-                            Работа с телесными зажимами и психосоматикой
-                        </p>
-                        <ul class="service-features">
-                            <li>Снятие мышечных блоков</li>
-                            <li>Работа с дыханием</li>
-                            <li>Телесное осознавание</li>
-                        </ul>
-                        <div class="service-footer">
-                            <span class="service-duration">90 минут</span>
-                            <span class="service-price">6000 ₽</span>
-                        </div>
-                        <button class="btn-book" data-service="Телесная терапия">Записаться</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Подход к работе -->
-    <section id="approach" class="approach">
-        <div class="container">
-            <h2 class="section-title">Мой подход к работе</h2>
-            <div class="section-subtitle">Принципы, которыми я руководствуюсь</div>
-            
-            <div class="approach-grid">
-                <div class="approach-card">
-                    <div class="approach-icon">🤝</div>
-                    <h3>Безопасность</h3>
-                    <p>Создаю атмосферу доверия и принятия, где вы можете быть собой</p>
-                </div>
-                <div class="approach-card">
-                    <div class="approach-icon">🔒</div>
-                    <h3>Конфиденциальность</h3>
-                    <p>Полная конфиденциальность всего, что происходит на сессиях</p>
-                </div>
-                <div class="approach-card">
-                    <div class="approach-icon">🎯</div>
-                    <h3>Индивидуальность</h3>
-                    <p>Подбираю методы работы под ваши уникальные потребности и цели</p>
-                </div>
-                <div class="approach-card">
-                    <div class="approach-icon">📈</div>
-                    <h3>Результативность</h3>
-                    <p>Работаем на конкретный результат с измеримыми изменениями</p>
+                <div class="service-card">
+                    <h3>Телесная терапия</h3>
+                    <p>Работа с психосоматикой, телесными зажимами и эмоциональными блоками</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Отзывы -->
-    <section id="testimonials" class="testimonials">
+    <section id="reviews" class="reviews">
         <div class="container">
-            <h2 class="section-title">Отзывы клиентов</h2>
-            <div class="section-subtitle">Что говорят те, кто уже прошел терапию</div>
-            
-            <div class="testimonials-container">
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="testimonial-avatar">А</div>
-                        <div class="testimonial-info">
-                            <h4>Анна</h4>
-                            <div class="testimonial-rating">★★★★★</div>
-                        </div>
+            <h2>Отзывы клиентов</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-author">Анна, 34 года</span>
+                        <span class="review-rating">★★★★★</span>
                     </div>
-                    <p class="testimonial-text">
-                        "Юлия помогла мне справиться с тревожностью, которая мучила меня годами. 
-                        Очень деликатный и профессиональный подход."
+                    <p class="review-text">
+                        Обратилась к Юлии с проблемами в отношениях. После нескольких сессий многое 
+                        стало понятнее, научилась слышать себя и партнера. Благодарю за профессионализм 
+                        и чуткость!
                     </p>
-                    <div class="testimonial-date">Март 2024</div>
                 </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="testimonial-avatar">М</div>
-                        <div class="testimonial-info">
-                            <h4>Михаил и Елена</h4>
-                            <div class="testimonial-rating">★★★★★</div>
-                        </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-author">Михаил, 41 год</span>
+                        <span class="review-rating">★★★★★</span>
                     </div>
-                    <p class="testimonial-text">
-                        "Парная терапия спасла наш брак. Мы научились слышать друг друга и решать конфликты конструктивно."
+                    <p class="review-text">
+                        Работа с Юлией помогла мне разобраться в себе, снять хронический стресс и 
+                        телесные зажимы. Очень рекомендую как специалиста высокого уровня.
                     </p>
-                    <div class="testimonial-date">Февраль 2024</div>
                 </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="testimonial-avatar">О</div>
-                        <div class="testimonial-info">
-                            <h4>Ольга</h4>
-                            <div class="testimonial-rating">★★★★★</div>
-                        </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-author">Елена, 28 лет</span>
+                        <span class="review-rating">★★★★★</span>
                     </div>
-                    <p class="testimonial-text">
-                        "Телесная терапия помогла мне освободиться от зажимов и научиться чувствовать свое тело. Рекомендую!"
+                    <p class="review-text">
+                        Спасибо за деликатный подход и реальную помощь! Юлия помогла мне принять себя 
+                        и наладить интимную сферу жизни. Чувствую себя совершенно по-другому.
                     </p>
-                    <div class="testimonial-date">Январь 2024</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Контакты и форма -->
+    <!-- Контакты и запись -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2 class="section-title">Запись на консультацию</h2>
-            <div class="section-subtitle">Сделайте первый шаг к позитивным изменениям</div>
-            
+            <h2>Запись на консультацию</h2>
             <div class="contact-content">
                 <div class="contact-info">
                     <h3>Контактная информация</h3>
-                    
-                    <div class="contact-item">
-                        <span class="contact-icon">📞</span>
-                        <div>
-                            <h4>Телефон</h4>
-                            <p>+7 (495) 123-45-67</p>
-                            <p class="text-small">Ежедневно с 10:00 до 20:00</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <span class="contact-icon">✉️</span>
-                        <div>
-                            <h4>Email</h4>
-                            <p>yulia.psychologist@mail.ru</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <span class="contact-icon">📍</span>
-                        <div>
-                            <h4>Адрес</h4>
-                            <p>Москва, ул. Тверская, д. 15</p>
-                            <p class="text-small">Также доступны онлайн-консультации</p>
-                        </div>
-                    </div>
-                    
-                    <div class="social-section">
-                        <h4>Социальные сети</h4>
-                        <div class="social-links">
-                            <a href="#" class="social-link">📱</a>
-                            <a href="#" class="social-link">💬</a>
-                            <a href="#" class="social-link">📷</a>
-                        </div>
-                    </div>
+                    <p><strong>Email:</strong> <a href="mailto:julia.psycholog@example.com">julia.psycholog@example.com</a></p>
+                    <p><strong>Telegram:</strong> <a href="https://t.me/julia_psycholog" target="_blank">@julia_psycholog</a></p>
+                    <p><strong>WhatsApp:</strong> <a href="https://wa.me/79991234567" target="_blank">+7 999 123-45-67</a></p>
+                    <p class="session-info">
+                        <strong>Формат:</strong> Онлайн и очно<br>
+                        <strong>Стоимость:</strong> от 3000 руб/час
+                    </p>
                 </div>
-                
-                <div class="contact-form-container">
-                    <form id="booking-form" class="contact-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="name">Ваше имя *</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Телефон *</label>
-                                <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="example@mail.ru">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="service">Выберите услугу *</label>
-                            <select id="service" name="service" required>
-                                <option value="">-- Выберите услугу --</option>
-                                <option value="individual">Индивидуальная психотерапия</option>
-                                <option value="couple">Парная терапия</option>
-                                <option value="sexology">Сексологическое консультирование</option>
-                                <option value="body">Телесная терапия</option>
-                                <option value="online">Онлайн-консультация</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Комментарий</label>
-                            <textarea id="message" name="message" rows="4" placeholder="Опишите коротко вашу ситуацию (необязательно)"></textarea>
-                        </div>
-                        
-                        <button type="submit" class="form-submit">
-                            Отправить заявку
-                        </button>
+                <div class="contact-form-wrapper">
+                    <form id="appointmentForm" class="contact-form">
+                        <input type="text" name="name" placeholder="Ваше имя *" required>
+                        <input type="email" name="email" placeholder="Email *" required>
+                        <input type="tel" name="phone" placeholder="Телефон *" required>
+                        <select name="service" required>
+                            <option value="">Выберите услугу *</option>
+                            <option value="psychology">Психологическое консультирование</option>
+                            <option value="sexology">Сексология</option>
+                            <option value="energy">Энерготерапия</option>
+                            <option value="body">Телесная терапия</option>
+                        </select>
+                        <textarea name="message" placeholder="Опишите ваш запрос" rows="4"></textarea>
+                        <button type="submit" class="submit-button">Отправить заявку</button>
                     </form>
+                    <div id="formMessage" class="form-message"></div>
                 </div>
             </div>
         </div>
@@ -455,12 +169,11 @@
     <!-- Футер -->
     <footer>
         <div class="container">
-            <p>&copy; 2024 Юлия - Психолог, Сексолог, Телесный терапевт</p>
-            <p>Все права защищены | Конфиденциальность гарантирована</p>
+            <p>&copy; 2024 Юлия - Психолог, Сексолог, Энерготерапевт. Все права защищены.</p>
+            <p class="disclaimer">Информация на сайте не является публичной офертой. Консультация не заменяет медицинскую помощь.</p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
