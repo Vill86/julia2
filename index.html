@@ -192,6 +192,7 @@
             border-radius: 8px;
             box-shadow: var(--shadow);
             transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
 
         .service-card:hover {
@@ -202,6 +203,25 @@
         .service-card h3 {
             color: var(--primary-color);
             margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            margin-bottom: 1.5rem;
+        }
+
+        .service-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 2px solid var(--light-bg);
+        }
+
+        .service-price-label {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            font-weight: normal;
         }
 
         .reviews {
@@ -380,7 +400,7 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Юлия</h1>
+                    <h1>Юлия Иванова</h1>
                     <p class="subtitle">Психолог • Сексолог • Энерготерапевт • Телесный терапевт</p>
                     <p class="experience">Стаж работы: 7 лет</p>
                     <button class="primary-button" onclick="scrollToContact()">Записаться на консультацию</button>
@@ -425,18 +445,30 @@
                 <div class="service-card">
                     <h3>Психологическое консультирование</h3>
                     <p>Работа с тревогой, стрессом, депрессией, самооценкой и личностным ростом</p>
+                    <div class="service-price">
+                        <span class="service-price-label">Стоимость: </span>5 000 ₽
+                    </div>
                 </div>
                 <div class="service-card">
                     <h3>Сексология</h3>
                     <p>Консультирование по вопросам интимной жизни, сексуальных дисфункций и отношений</p>
+                    <div class="service-price">
+                        <span class="service-price-label">Стоимость: </span>6 000 ₽
+                    </div>
                 </div>
                 <div class="service-card">
                     <h3>Энерготерапия</h3>
                     <p>Работа с энергетическими блоками, восстановление энергетического баланса</p>
+                    <div class="service-price">
+                        <span class="service-price-label">Стоимость: </span>7 000 ₽
+                    </div>
                 </div>
                 <div class="service-card">
                     <h3>Телесная терапия</h3>
                     <p>Работа с психосоматикой, телесными зажимами и эмоциональными блоками</p>
+                    <div class="service-price">
+                        <span class="service-price-label">Стоимость: </span>8 000 ₽
+                    </div>
                 </div>
             </div>
         </div>
@@ -488,11 +520,10 @@
                 <div class="contact-info">
                     <h3>Контактная информация</h3>
                     <p><strong>Email:</strong> <a href="mailto:julia.psycholog@example.com">julia.psycholog@example.com</a></p>
-                    <p><strong>Telegram:</strong> <a href="https://t.me/julia_psycholog" target="_blank">@YuliaRise</a></p>
-                    <p><strong>WhatsApp:</strong> <a href="https://wa.me/79991234567" target="_blank">+7 926 294-99-86</a></p>
+                    <p><strong>Telegram:</strong> <a href="https://t.me/julia_psycholog" target="_blank">@julia_psycholog</a></p>
+                    <p><strong>WhatsApp:</strong> <a href="https://wa.me/79991234567" target="_blank">+7 999 123-45-67</a></p>
                     <p class="session-info">
-                        <strong>Формат:</strong> Онлайн и очно<br>
-                        <strong>Стоимость:</strong> от 5000 руб/час
+                        <strong>Формат:</strong> Онлайн и очно
                     </p>
                 </div>
                 <div class="contact-form-wrapper">
@@ -502,10 +533,10 @@
                         <input type="tel" name="phone" placeholder="Телефон *" required>
                         <select name="service" required>
                             <option value="">Выберите услугу *</option>
-                            <option value="psychology">Психологическое консультирование</option>
-                            <option value="sexology">Сексология</option>
-                            <option value="energy">Энерготерапия</option>
-                            <option value="body">Телесная терапия</option>
+                            <option value="psychology">Психологическое консультирование (5 000 ₽)</option>
+                            <option value="sexology">Сексология (6 000 ₽)</option>
+                            <option value="energy">Энерготерапия (7 000 ₽)</option>
+                            <option value="body">Телесная терапия (8 000 ₽)</option>
                         </select>
                         <textarea name="message" placeholder="Опишите ваш запрос" rows="4"></textarea>
                         <button type="submit" class="submit-button">Отправить заявку</button>
@@ -542,10 +573,10 @@
             const data = Object.fromEntries(formData);
             
             const services = {
-                'psychology': 'Психологическое консультирование',
-                'sexology': 'Сексология',
-                'energy': 'Энерготерапия',
-                'body': 'Телесная терапия'
+                'psychology': 'Психологическое консультирование (5 000 ₽)',
+                'sexology': 'Сексология (6 000 ₽)',
+                'energy': 'Энерготерапия (7 000 ₽)',
+                'body': 'Телесная терапия (8 000 ₽)'
             };
             
             const subject = encodeURIComponent('Заявка на консультацию от ' + data.name);
@@ -567,7 +598,3 @@
     </script>
 </body>
 </html>
-
-
-
-
