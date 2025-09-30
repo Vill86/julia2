@@ -1,10 +1,23 @@
+// Убираем прелоадер после загрузки
+window.addEventListener('load', () => {
+    const preloader = document.querySelector('.preloader');
+    if (preloader) {
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 500);
+    }
+});
+
 // Плавная прокрутка
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
     });
 });
 
@@ -35,14 +48,4 @@ tabButtons.forEach(button => {
     });
 });
 
-// Форма
-const form = document.getElementById('booking-form');
-if (form) {
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('Спасибо за заявку! Мы свяжемся с вами в ближайшее время.');
-        form.reset();
-    });
-}
-
-console.log('Сайт загружен успешно!');
+console.log('Сайт загружен!');
