@@ -1,771 +1,466 @@
-/* ============================================
-   ОСНОВНЫЕ ПЕРЕМЕННЫЕ
-   ============================================ */
-:root {
-    --primary-color: #8b5cf6;
-    --primary-dark: #7c3aed;
-    --secondary-color: #f3f4f6;
-    --text-dark: #1f2937;
-    --text-light: #6b7280;
-    --accent-color: #ec4899;
-    --success-color: #10b981;
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
-}
-
-/* ============================================
-   СБРОС СТИЛЕЙ
-   ============================================ */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: var(--text-dark);
-    overflow-x: hidden;
-}
-
-/* ============================================
-   НАВИГАЦИЯ
-   ============================================ */
-.navbar {
-    background: white;
-    box-shadow: var(--shadow-md);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    transition: var(--transition);
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo-text {
-    font-size: 1.5rem;
-    font-weight: 700;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.logo-subtitle {
-    font-size: 0.75rem;
-    color: var(--text-light);
-    font-weight: 400;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-    align-items: center;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--text-dark);
-    font-weight: 500;
-    position: relative;
-    transition: var(--transition);
-}
-
-.nav-link:hover {
-    color: var(--primary-color);
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary-color);
-    transition: width 0.3s;
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-    width: 100%;
-}
-
-.hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 4px;
-    cursor: pointer;
-}
-
-.hamburger span {
-    width: 25px;
-    height: 3px;
-    background: var(--text-dark);
-    transition: var(--transition);
-}
-
-/* ============================================
-   HERO СЕКЦИЯ
-   ============================================ */
-.hero {
-    margin-top: 70px;
-    padding: 4rem 2rem;
-    background: var(--gradient-primary);
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    color: white;
-}
-
-.hero-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.hero-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-}
-
-.hero-title {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-}
-
-.hero-subtitle {
-    font-size: 1.5rem;
-    font-weight: 300;
-    margin-bottom: 1.5rem;
-    opacity: 0.95;
-}
-
-.hero-description {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-    opacity: 0.95;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-/* ============================================
-   КНОПКИ
-   ============================================ */
-.btn {
-    display: inline-block;
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition);
-    border: 2px solid transparent;
-    cursor: pointer;
-}
-
-.btn-primary {
-    background: white;
-    color: var(--primary-color);
-    box-shadow: var(--shadow-lg);
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-xl);
-}
-
-.btn-outline {
-    background: transparent;
-    color: white;
-    border-color: white;
-}
-
-.btn-outline:hover {
-    background: white;
-    color: var(--primary-color);
-}
-
-.btn-book {
-    width: 100%;
-    padding: 0.75rem;
-    background: var(--gradient-primary);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 1rem;
-    transition: var(--transition);
-}
-
-.btn-book:hover {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-lg);
-}
-
-/* ============================================
-   ОСНОВНЫЕ СЕКЦИИ
-   ============================================ */
-section {
-    padding: 5rem 2rem;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: var(--text-dark);
-    font-weight: 700;
-}
-
-.section-subtitle {
-    text-align: center;
-    color: var(--text-light);
-    font-size: 1.1rem;
-    margin-bottom: 3rem;
-}
-
-/* ============================================
-   СЕКЦИЯ "О СЕБЕ"
-   ============================================ */
-.about {
-    background: var(--secondary-color);
-}
-
-.about-content-simple {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.about-content-simple h3 {
-    margin-bottom: 2rem;
-    color: var(--text-dark);
-    font-size: 1.8rem;
-}
-
-.qualification-list {
-    text-align: left;
-    max-width: 700px;
-    margin: 0 auto 2rem;
-}
-
-.qualification-item {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    background: white;
-    border-radius: 10px;
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition);
-}
-
-.qualification-item:hover {
-    transform: translateX(10px);
-    box-shadow: var(--shadow-md);
-}
-
-.qualification-item .icon {
-    font-size: 1.8rem;
-    display: flex;
-    align-items: center;
-}
-
-.qualification-item h4 {
-    margin-bottom: 0.5rem;
-    color: var(--text-dark);
-}
-
-.qualification-item p {
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
-.about-philosophy {
-    padding: 2rem;
-   }
-
-.services-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-}
-
-.tab-btn {
-    padding: 0.75rem 1.5rem;
-    background: transparent;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: var(--transition);
-}
-
-.tab-btn.active,
-.tab-btn:hover {
-    background: var(--primary-color);
-    color: white;
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-}
-
-.service-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow-md);
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-}
-
-.service-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: var(--gradient-primary);
-}
-
-.service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-xl);
-}
-
-.service-icon {
-    width: 60px;
-    height: 60px;
-    background: var(--gradient-primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-}
-
-.service-card h3 {
-    margin-bottom: 1rem;
-    color: var(--text-dark);
-}
-
-.service-description {
-    color: var(--text-light);
-    margin-bottom: 1rem;
-}
-
-.service-features {
-    list-style: none;
-    margin: 1rem 0;
-}
-
-.service-features li {
-    padding: 0.5rem 0;
-    color: var(--text-light);
-    position: relative;
-    padding-left: 1.5rem;
-}
-
-.service-features li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--success-color);
-    font-weight: bold;
-}
-
-.service-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e5e7eb;
-}
-
-.service-duration {
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
-.service-price {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-/* ============================================
-   ПОДХОД К РАБОТЕ
-   ============================================ */
-.approach {
-    background: var(--secondary-color);
-    padding: 5rem 2rem;
-}
-
-.approach-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-}
-
-.approach-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    text-align: center;
-    transition: var(--transition);
-    box-shadow: var(--shadow-md);
-}
-
-.approach-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-xl);
-}
-
-.approach-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.approach-card h3 {
-    margin-bottom: 1rem;
-    color: var(--text-dark);
-}
-
-.approach-card p {
-    color: var(--text-light);
-    line-height: 1.6;
-}
-
-/* ============================================
-   ОТЗЫВЫ
-   ============================================ */
-.testimonials {
-    padding: 5rem 2rem;
-    background: var(--secondary-color);
-}
-
-.testimonials-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-}
-
-.testimonial-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow-md);
-    transition: var(--transition);
-}
-
-.testimonial-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-xl);
-}
-
-.testimonial-header {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    align-items: center;
-}
-
-.testimonial-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: var(--gradient-primary);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-}
-
-.testimonial-rating {
-    color: #fbbf24;
-    font-size: 1.1rem;
-}
-
-.testimonial-text {
-    color: var(--text-light);
-    line-height: 1.6;
-    font-style: italic;
-    margin-bottom: 1rem;
-}
-
-.testimonial-date {
-    font-size: 0.9rem;
-    color: var(--primary-color);
-    font-weight: 600;
-}
-
-/* ============================================
-   КОНТАКТЫ И ФОРМА
-   ============================================ */
-.contact {
-    padding: 5rem 2rem;
-    background: var(--gradient-primary);
-}
-
-.contact .section-title,
-.contact .section-subtitle {
-    color: white;
-}
-
-.contact-content {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 3rem;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.contact-info {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow-xl);
-}
-
-.contact-info h3 {
-    margin-bottom: 1.5rem;
-    color: var(--text-dark);
-}
-
-.contact-item {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.contact-icon {
-    font-size: 1.5rem;
-    flex-shrink: 0;
-}
-
-.contact-item h4 {
-    margin-bottom: 0.25rem;
-    color: var(--text-dark);
-}
-
-.contact-item p {
-    color: var(--text-light);
-}
-
-.text-small {
-    font-size: 0.9rem;
-    color: var(--text-light);
-}
-
-.social-section {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid #e5e7eb;
-}
-
-.social-links {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.social-link {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--secondary-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-    text-decoration: none;
-    font-size: 1.2rem;
-}
-
-.social-link:hover {
-    background: var(--primary-color);
-    transform: scale(1.1);
-}
-
-.contact-form-container {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow-xl);
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--text-dark);
-    font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: var(--transition);
-    font-family: inherit;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-}
-
-.form-submit {
-    width: 100%;
-    background: var(--gradient-primary);
-    color: white;
-    padding: 1rem;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.form-submit:hover {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-lg);
-}
-
-/* ============================================
-   ФУТЕР
-   ============================================ */
-footer {
-    background: var(--text-dark);
-    color: white;
-    padding: 2rem;
-    text-align: center;
-}
-
-footer p {
-    margin: 0.5rem 0;
-    opacity: 0.8;
-}
-
-/* ============================================
-   АДАПТИВНОСТЬ
-   ============================================ */
-@media (max-width: 768px) {
-    .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 70px;
-        flex-direction: column;
-        background: white;
-        width: 100%;
-        box-shadow: var(--shadow-lg);
-        transition: left 0.3s;
-        padding: 2rem;
-    }
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Юлия - Психолог, Сексолог, Телесный терапевт</title>
+    <meta name="description" content="Профессиональный психолог, сексолог и телесный терапевт. Помощь при тревоге, депрессии, проблемах в отношениях. Онлайн и офлайн консультации.">
     
-    .nav-menu.active {
-        left: 0;
-    }
+    <!-- Стили -->
+    <link rel="stylesheet" href="css/styles.css">
     
-    .hamburger {
-        display: flex;
-    }
-    
-    .hero-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-    
-    .hero-title {
-        font-size: 2rem;
-    }
-    
-    .contact-content {
-        grid-template-columns: 1fr;
-    }
-    
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-    
-    .services-tabs {
-        flex-direction: column;
-    }
-    
-    .tab-btn {
-        width: 100%;
-    }
-} 
+    <!-- Дополнительные стили для уменьшения фото -->
+    <style>
+        .hero-image,
+        .image-container {
+            max-width: 250px !important;
+            margin: 0 auto !important;
+        }
+        
+        .main-photo,
+        img[alt*="Юлия"],
+        .hero img {
+            max-width: 250px !important;
+            width: 100% !important;
+            height: auto !important;
+            display: block !important;
+            border-radius: 50%;
+            border: 5px solid rgba(255,255,255,0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-image,
+            .image-container,
+            .main-photo,
+            .hero img {
+                max-width: 180px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">Юлия</span>
+                <span class="logo-subtitle">психолог • сексолог</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Главная</a></li>
+                <li><a href="#about" class="nav-link">Обо мне</a></li>
+                <li><a href="#services" class="nav-link">Услуги</a></li>
+                <li><a href="#approach" class="nav-link">Методы</a></li>
+                <li><a href="#testimonials" class="nav-link">Отзывы</a></li>
+                <li><a href="#contact" class="nav-link">Контакты</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Главный экран -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text animate-text">
+                    <h1 class="hero-title">Юлия</h1>
+                    <h2 class="hero-subtitle">Психолог • Сексолог • Телесный терапевт</h2>
+                    
+                    <p class="hero-description">
+                        Помогу вам обрести внутреннюю гармонию, улучшить качество отношений 
+                        и раскрыть потенциал вашего тела через профессиональную психологическую помощь
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary">Записаться на консультацию</a>
+                        <a href="#services" class="btn btn-outline">Узнать о услугах</a>
+                    </div>
+                </div>
+                
+                <div class="hero-image animate-image">
+                    <div class="image-container">
+                        <img src="https://via.placeholder.com/250x250/9c88ff/ffffff?text=Юлия" 
+                             alt="Психолог Юлия" 
+                             class="main-photo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О себе -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">Обо мне</h2>
+            <div class="section-subtitle">Профессиональная помощь с заботой о вас</div>
+            
+            <div class="about-content-simple">
+                <h3>Образование и квалификация</h3>
+                <div class="qualification-list">
+                    <div class="qualification-item">
+                        <span class="icon">🎓</span>
+                        <div>
+                            <h4>Высшее психологическое образование</h4>
+                            <p>МГУ им. М.В. Ломоносова, клиническая психология</p>
+                        </div>
+                    </div>
+                    <div class="qualification-item">
+                        <span class="icon">💝</span>
+                        <div>
+                            <h4>Сертифицированный сексолог</h4>
+                            <p>Институт современной сексологии и психотерапии</p>
+                        </div>
+                    </div>
+                    <div class="qualification-item">
+                        <span class="icon">🤸</span>
+                        <div>
+                            <h4>Телесно-ориентированный терапевт</h4>
+                            <p>Международная школа телесных практик</p>
+                        </div>
+                    </div>
+                    <div class="qualification-item">
+                        <span class="icon">👥</span>
+                        <div>
+                            <h4>Специализация в парной терапии</h4>
+                            <p>Метод эмоционально-фокусированной терапии (EFT)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="about-philosophy">
+                    <em>"Я верю, что каждый человек обладает внутренними ресурсами для позитивных изменений. 
+                    Моя задача - создать безопасное пространство и помочь вам найти ваш уникальный путь к гармонии и счастью."</em>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Услуги -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Услуги</h2>
+            <div class="section-subtitle">Выберите подходящий формат работы</div>
+            
+            <div class="services-tabs">
+                <button class="tab-btn active" data-tab="individual">Индивидуальная терапия</button>
+                <button class="tab-btn" data-tab="couple">Парная терапия</button>
+                <button class="tab-btn" data-tab="sexology">Сексология</button>
+                <button class="tab-btn" data-tab="body">Телесная терапия</button>
+            </div>
+            
+            <div class="tab-content active" id="individual">
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🧠</div>
+                        <h3>Работа с тревогой и стрессом</h3>
+                        <p class="service-description">
+                            Освоите техники управления тревожностью, научитесь справляться со стрессом
+                        </p>
+                        <ul class="service-features">
+                            <li>Техники релаксации</li>
+                            <li>Работа с паническими атаками</li>
+                            <li>Управление эмоциями</li>
+                        </ul>
+                        <div class="service-footer">
+                            <span class="service-duration">60 минут</span>
+                            <span class="service-price">5000 ₽</span>
+                        </div>
+                        <button class="btn-book" data-service="Работа с тревогой">Записаться</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">💭</div>
+                        <h3>Депрессия и апатия</h3>
+                        <p class="service-description">
+                            Поможем вернуть радость жизни и найти внутренние ресурсы для восстановления
+                        </p>
+                        <ul class="service-features">
+                            <li>Когнитивная терапия</li>
+                            <li>Поиск смыслов</li>
+                            <li>Активация ресурсов</li>
+                        </ul>
+                        <div class="service-footer">
+                            <span class="service-duration">60 минут</span>
+                            <span class="service-price">5000 ₽</span>
+                        </div>
+                        <button class="btn-book" data-service="Депрессия">Записаться</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🎯</div>
+                        <h3>Самооценка и уверенность</h3>
+                        <p class="service-description">
+                            Работа с самопринятием, развитие уверенности в себе
+                        </p>
+                        <ul class="service-features">
+                            <li>Работа с критическим голосом</li>
+                            <li>Техники самоподдержки</li>
+                            <li>Развитие self-compassion</li>
+                        </ul>
+                        <div class="service-footer">
+                            <span class="service-duration">60 минут</span>
+                            <span class="service-price">5000 ₽</span>
+                        </div>
+                        <button class="btn-book" data-service="Самооценка">Записаться</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="couple">
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">💑</div>
+                        <h3>Парное консультирование</h3>
+                        <p class="service-description">
+                            Помощь парам в решении конфликтов и улучшении взаимопонимания
+                        </p>
+                        <ul class="service-features">
+                            <li>Улучшение коммуникации</li>
+                            <li>Решение конфликтов</li>
+                            <li>Восстановление близости</li>
+                        </ul>
+                        <div class="service-footer">
+                            <span class="service-duration">90 минут</span>
+                            <span class="service-price">7000 ₽</span>
+                        </div>
+                        <button class="btn-book" data-service="Парная терапия">Записаться</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="sexology">
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">💝</div>
+                        <h3>Сексологическое консультирование</h3>
+                        <p class="service-description">
+                            Деликатная работа с вопросами сексуальности и интимности
+                        </p>
+                        <ul class="service-features">
+                            <li>Работа с либидо</li>
+                            <li>Сексуальные блоки</li>
+                            <li>Гармонизация интимной жизни</li>
+                        </ul>
+                        <div class="service-footer">
+                            <span class="service-duration">60 минут</span>
+                            <span class="service-price">5500 ₽</span>
+                        </div>
+                        <button class="btn-book" data-service="Сексология">Записаться</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="body">
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🤸</div>
+                        <h3>Телесная терапия</h3>
+                        <p class="service-description">
+                            Работа с телесными зажимами и психосоматикой
+                        </p>
+                        <ul class="service-features">
+                            <li>Снятие мышечных блоков</li>
+                            <li>Работа с дыханием</li>
+                            <li>Телесное осознавание</li>
+                        </ul>
+                        <div class="service-footer">
+                            <span class="service-duration">90 минут</span>
+                            <span class="service-price">6000 ₽</span>
+                        </div>
+                        <button class="btn-book" data-service="Телесная терапия">Записаться</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подход к работе -->
+    <section id="approach" class="approach">
+        <div class="container">
+            <h2 class="section-title">Мой подход к работе</h2>
+            <div class="section-subtitle">Принципы, которыми я руководствуюсь</div>
+            
+            <div class="approach-grid">
+                <div class="approach-card">
+                    <div class="approach-icon">🤝</div>
+                    <h3>Безопасность</h3>
+                    <p>Создаю атмосферу доверия и принятия, где вы можете быть собой</p>
+                </div>
+                <div class="approach-card">
+                    <div class="approach-icon">🔒</div>
+                    <h3>Конфиденциальность</h3>
+                    <p>Полная конфиденциальность всего, что происходит на сессиях</p>
+                </div>
+                <div class="approach-card">
+                    <div class="approach-icon">🎯</div>
+                    <h3>Индивидуальность</h3>
+                    <p>Подбираю методы работы под ваши уникальные потребности и цели</p>
+                </div>
+                <div class="approach-card">
+                    <div class="approach-icon">📈</div>
+                    <h3>Результативность</h3>
+                    <p>Работаем на конкретный результат с измеримыми изменениями</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Отзывы -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Отзывы клиентов</h2>
+            <div class="section-subtitle">Что говорят те, кто уже прошел терапию</div>
+            
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">А</div>
+                        <div class="testimonial-info">
+                            <h4>Анна</h4>
+                            <div class="testimonial-rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">
+                        "Юлия помогла мне справиться с тревожностью, которая мучила меня годами. 
+                        Очень деликатный и профессиональный подход."
+                    </p>
+                    <div class="testimonial-date">Март 2024</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">М</div>
+                        <div class="testimonial-info">
+                            <h4>Михаил и Елена</h4>
+                            <div class="testimonial-rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">
+                        "Парная терапия спасла наш брак. Мы научились слышать друг друга и решать конфликты конструктивно."
+                    </p>
+                    <div class="testimonial-date">Февраль 2024</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">О</div>
+                        <div class="testimonial-info">
+                            <h4>Ольга</h4>
+                            <div class="testimonial-rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">
+                        "Телесная терапия помогла мне освободиться от зажимов и научиться чувствовать свое тело. Рекомендую!"
+                    </p>
+                    <div class="testimonial-date">Январь 2024</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты и форма -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Запись на консультацию</h2>
+            <div class="section-subtitle">Сделайте первый шаг к позитивным изменениям</div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Контактная информация</h3>
+                    
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <div>
+                            <h4>Телефон</h4>
+                            <p>+7 (495) 123-45-67</p>
+                            <p class="text-small">Ежедневно с 10:00 до 20:00</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <div>
+                            <h4>Email</h4>
+                            <p>yulia.psychologist@mail.ru</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <div>
+                            <h4>Адрес</h4>
+                            <p>Москва, ул. Тверская, д. 15</p>
+                            <p class="text-small">Также доступны онлайн-консультации</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-section">
+                        <h4>Социальные сети</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link">📱</a>
+                            <a href="#" class="social-link">💬</a>
+                            <a href="#" class="social-link">📷</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form-container">
+                    <form id="booking-form" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Ваше имя *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Телефон *</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="example@mail.ru">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Выберите услугу *</label>
+                            <select id="service" name="service" required>
+                                <option value="">-- Выберите услугу --</option>
+                                <option value="individual">Индивидуальная психотерапия</option>
+                                <option value="couple">Парная терапия</option>
+                                <option value="sexology">Сексологическое консультирование</option>
+                                <option value="body">Телесная терапия</option>
+                                <option value="online">Онлайн-консультация</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Комментарий</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Опишите коротко вашу ситуацию (необязательно)"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="form-submit">
+                            Отправить заявку
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Юлия - Психолог, Сексолог, Телесный терапевт</p>
+            <p>Все права защищены | Конфиденциальность гарантирована</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
