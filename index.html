@@ -404,9 +404,9 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Юлия</h1>
+                    <h1>Юлия </h1>
                     <p class="subtitle">Психолог • Сексолог • Энерготерапевт • Телесный терапевт</p>
-                    <p class="experience">Стаж рабо��ы: 7 лет</p>
+                    <p class="experience">Стаж работы: 7 лет</p>
                     <button class="primary-button" onclick="scrollToContact()">Записаться на консультацию</button>
                 </div>
                 <div class="hero-image">
@@ -559,7 +559,6 @@
     </footer>
 
     <script>
-        // ВАШИ ДАННЫЕ TELEGRAM БОТА
         const TELEGRAM_BOT_TOKEN = '8462046574:AAFA_6MmnPX1Ozaj8WV4drhqw6jiZz8lvvY';
         const TELEGRAM_CHAT_ID = '783773797';
 
@@ -594,23 +593,24 @@
                 'body': 'Телесная терапия (8 000 ₽)'
             };
             
-            const message = `🆕 <b>Новая заявка с сайта!</b>\n\n` +
-                           `👤 <b>Имя:</b> ${data.name}\n` +
-                           `📧 <b>Email:</b> ${data.email}\n` +
-                           `📱 <b>Телефон:</b> ${data.phone}\n` +
-                           `💼 <b>Услуга:</b> ${services[data.service]}\n` +
-                           `💬 <b>Сообщение:</b> ${data.message || 'Не указано'}`;
+            const message = `🆕 Новая заявка с сайта!\n\n` +
+                           `👤 Имя: ${data.name}\n` +
+                           `📧 Email: ${data.email}\n` +
+                           `📱 Телефон: ${data.phone}\n` +
+                           `💼 Услуга: ${services[data.service]}\n` +
+                           `💬 Сообщение: ${data.message || 'Не указано'}`;
+            
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             
             try {
-                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
                         chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'HTML'
+                        text: message
                     })
                 });
                 
@@ -625,7 +625,7 @@
                 }
             } catch (error) {
                 console.error('Ошибка:', error);
-                messageDiv.textContent = '❌ Ошибка отправки: ' + error.message;
+                messageDiv.textContent = '❌ Ошибка: ' + error.message;
                 messageDiv.className = 'form-message error';
             } finally {
                 submitButton.disabled = false;
