@@ -406,7 +406,7 @@
                 <div class="hero-text">
                     <h1>Юлия</h1>
                     <p class="subtitle">Психолог • Сексолог • Энерготерапевт • Телесный терапевт</p>
-                    <p class="experience">Стаж работы: 7 лет</p>
+                    <p class="experience">Стаж рабо��ы: 7 лет</p>
                     <button class="primary-button" onclick="scrollToContact()">Записаться на консультацию</button>
                 </div>
                 <div class="hero-image">
@@ -448,7 +448,7 @@
             <div class="services-grid">
                 <div class="service-card">
                     <h3>Психологическое консультирование</h3>
-                    <p>Работа с тревогой, стрессом, депрессией, са��ооценкой и личностным ростом</p>
+                    <p>Работа с тревогой, стрессом, депрессией, самооценкой и личностным ростом</p>
                     <div class="service-price">
                         <span class="service-price-label">Стоимость: </span>5 000 ₽
                     </div>
@@ -559,12 +559,9 @@
     </footer>
 
     <script>
-        // ============================================
-        // ВСТАВЬТЕ СЮДА СВОИ ДАННЫЕ!
-        // ============================================
+        // ВАШИ ДАННЫЕ TELEGRAM БОТА
         const TELEGRAM_BOT_TOKEN = '8462046574:AAFA_6MmnPX1Ozaj8WV4drhqw6jiZz8lvvY';
-        const TELEGRAM_CHAT_ID = '37655117';
-        // ============================================
+        const TELEGRAM_CHAT_ID = '783773797';
 
         function scrollToContact() {
             document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
@@ -628,7 +625,7 @@
                 }
             } catch (error) {
                 console.error('Ошибка:', error);
-                messageDiv.textContent = '❌ Ошибка отправки: ' + error.message + '. Напишите напрямую в Telegram.';
+                messageDiv.textContent = '❌ Ошибка отправки: ' + error.message;
                 messageDiv.className = 'form-message error';
             } finally {
                 submitButton.disabled = false;
