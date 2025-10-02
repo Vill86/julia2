@@ -543,8 +543,7 @@
                             <option value="psychology">Психологическое консультирование (5 000 ₽)</option>
                             <option value="sexology">Сексология (6 000 ₽)</option>
                             <option value="energy">Энерготерапия (7 000 ₽)</option>
-                            <option value="body">Телесная терапия (8 000 ₽)</option>
-                            <option value="body">Гвоздестояние (4 000 ₽)</option>
+                            <option value="body">Телесная терапия (8 000 ₽)</option>                    
                         </select>
                         <textarea name="message" placeholder="Опишите ваш запрос (необязательно)" rows="4"></textarea>
                         <button type="submit" class="submit-button">Отправить заявку</button>
@@ -622,6 +621,7 @@
     </script>
 </body>
 </html>
+
 
 
 
