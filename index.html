@@ -91,6 +91,7 @@
         .submit-button:disabled {
             background: #ccc;
             cursor: not-allowed;
+            transform: none;
         }
 
         .hero {
@@ -404,7 +405,7 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Юлия </h1>
+                    <h1>Юлия</h1>
                     <p class="subtitle">Психолог • Сексолог • Энерготерапевт • Телесный терапевт</p>
                     <p class="experience">Стаж работы: 7 лет</p>
                     <button class="primary-button" onclick="scrollToContact()">Записаться на консультацию</button>
@@ -526,9 +527,11 @@
                     <p><strong>Email:</strong> <a href="mailto:julia.psycholog@example.com">julia.psycholog@example.com</a></p>
                     <p><strong>Telegram:</strong> <a href="https://t.me/YuliaRise" target="_blank">@YuliaRise</a></p>
                     <p><strong>WhatsApp:</strong> <a href="https://wa.me/79991234567" target="_blank">+7 999 123-45-67</a></p>
-                    <p class="session-info">
-                        <strong>Формат:</strong> Онлайн и очно
-                    </p>
+                    <div class="session-info">
+                        <p><strong>Формат:</strong> Онлайн и очно</p>
+                        <p><strong>Длительность:</strong> 60 минут</p>
+                        <p><strong>Запись:</strong> За 1-2 дня</p>
+                    </div>
                 </div>
                 <div class="contact-form-wrapper">
                     <form id="appointmentForm" class="contact-form">
@@ -559,13 +562,11 @@
     </footer>
 
     <script>
-        const TELEGRAM_BOT_TOKEN = '';
-        const TELEGRAM_CHAT_ID = '';' '
-
         function scrollToContact() {
             document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
         }
 
+        // Плавная прокрутка для всех якорных ссылок
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -574,63 +575,50 @@
             });
         });
 
+        // Обработка формы
         document.getElementById('appointmentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const submitButton = this.querySelector('.submit-button');
             const messageDiv = document.getElementById('formMessage');
             
+            // Блокируем кнопку
             submitButton.disabled = true;
             submitButton.textContent = 'Отправка...';
             
+            // Собираем данные формы
             const formData = new FormData(this);
             const data = Object.fromEntries(formData);
             
-            const services = {
-                'psychology': 'Психологическое консультирование (5 000 ₽)',
-                'sexology': 'Сексология (6 000 ₽)',
-                'energy': 'Энерготерапия (7 000 ₽)',
-                'body': 'Телесная терапия (8 000 ₽)'
-            };
-            
-            const message = `🆕 Новая заявка с сайта!\n\n` +
-                           `👤 Имя: ${data.name}\n` +
-                           `📧 Email: ${data.email}\n` +
-                           `📱 Телефон: ${data.phone}\n` +
-                           `💼 Услуга: ${services[data.service]}\n` +
-                           `💬 Сообщение: ${data.message || 'Не указано'}`;
-            
-            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-            
             try {
-                const response = await fetch(url, {
+                // Отправляем на PHP скрипт
+                const response = await fetch('send-telegram.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message
-                    })
+                    body: JSON.stringify(data)
                 });
                 
                 const result = await response.json();
                 
-                if (result.ok) {
-                    messageDiv.textContent = '✅ Заявка успешно отправлена! Скоро с вами свяжутся.';
+                if (response.ok && result.success) {
+                    messageDiv.textContent = '✅ ' + result.message;
                     messageDiv.className = 'form-message success';
-                    this.reset();
+                    this.reset(); // Очищаем форму
                 } else {
-                    throw new Error(result.description || 'Ошибка отправки');
+                    throw new Error(result.message || 'Ошибка отправки');
                 }
             } catch (error) {
                 console.error('Ошибка:', error);
-                messageDiv.textContent = '❌ Ошибка: ' + error.message;
+                messageDiv.textContent = '❌ Произошла ошибка. Попробуйте позже или свяжитесь напрямую через Telegram/WhatsApp.';
                 messageDiv.className = 'form-message error';
             } finally {
+                // Разблокируем кнопку
                 submitButton.disabled = false;
                 submitButton.textContent = 'Отправить заявку';
                 
+                // Скры��аем сообщение через 5 секунд
                 setTimeout(() => {
                     messageDiv.style.display = 'none';
                 }, 5000);
@@ -639,4 +627,3 @@
     </script>
 </body>
 </html>
-
