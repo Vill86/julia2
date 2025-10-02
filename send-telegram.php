@@ -1,7 +1,7 @@
 <?php
 // Настройки (замените на свои данные)
-$botToken = 'YOUR_BOT_TOKEN_HERE';
-$chatId = 'YOUR_CHAT_ID_HERE';
+$botToken = '8350350737:AAEzkLHZtifhH-CUiPCf47wXjWvhaQZo-ns';
+$chatId = '783773797';
 
 // Разрешаем запросы с вашего сайта
 header('Content-Type: application/json');
