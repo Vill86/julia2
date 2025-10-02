@@ -1,124 +1,155 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// ============= ВАШИ ДАННЫЕ =============
+define('BOT_TOKEN', '8350350737:AAEzkLHZtifhH-CUiPCf47wXjWvhaQZo-ns');
+define('CHAT_ID', '783773797');
+// ========================================
 
-echo "<h1>🔍 Диагностика Telegram бота</h1>";
-echo "<hr>";
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
 
-// ВСТАВЬТЕ СЮДА ВАШИ ДАННЫЕ
-$botToken = '8350350737:AAEzkLHZtifhH-CUiPCf47wXjWvhaQZo-ns';
-$chatId = '783773797';
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
+}
 
-echo "<h2>Шаг 1: Проверка токена бота</h2>";
-$url = "https://api.telegram.org/bot$botToken/getMe";
-$response = @file_get_contents($url);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Только POST запросы']);
+    exit;
+}
 
-if ($response === false) {
-    echo "❌ <span style='color: red;'>Не могу подключиться к Telegram API</span><br>";
-    echo "Возможно проблема с интернетом на хостинге<br>";
-} else {
-    $data = json_decode($response, true);
-    echo "<pre>";
-    print_r($data);
-    echo "</pre>";
+// Получаем данные
+$input = file_get_contents('php://input');
+$data = json_decode($input, true);
+
+if (!$data) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Неверные данные']);
+    exit;
+}
+
+$name = htmlspecialchars($data['name'] ?? '');
+$email = htmlspecialchars($data['email'] ?? '');
+$phone = htmlspecialchars($data['phone'] ?? '');
+$service = htmlspecialchars($data['service'] ?? '');
+$message = htmlspecialchars($data['message'] ?? 'Не указано');
+
+// Валидация
+if (empty($name) || empty($email) || empty($phone) || empty($service)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Заполните все обязательные поля']);
+    exit;
+}
+
+$services = [
+    'psychology' => 'Психологическое консультирование (5 000 ₽)',
+    'sexology' => 'Сексология (6 000 ₽)',
+    'energy' => 'Энерготерапия (7 000 ₽)',
+    'body' => 'Телесная терапия (8 000 ₽)'
+];
+
+// Формируем сообщение
+$text = "🆕 Новая заявка с сайта!\n\n";
+$text .= "👤 Имя: $name\n";
+$text .= "📧 Email: $email\n";
+$text .= "📱 Телефон: $phone\n";
+$text .= "💼 Услуга: " . ($services[$service] ?? $service) . "\n";
+$text .= "💬 Сообщение: $message\n";
+$text .= "📅 Дата: " . date('d.m.Y H:i:s');
+
+// URL для отправки
+$telegramUrl = "https://api.telegram.org/bot" . BOT_TOKEN . "/sendMessage";
+
+// Данные для отправки
+$postData = [
+    'chat_id' => CHAT_ID,
+    'text' => $text,
+    'parse_mode' => 'HTML'
+];
+
+// Пробуем 3 способа отправки
+
+// СПОСОБ 1: CURL (самый надёжный)
+if (function_exists('curl_init')) {
+    $ch = curl_init($telegramUrl);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
     
-    if (isset($data['ok']) && $data['ok']) {
-        echo "✅ <span style='color: green;'>Токен правильный!</span><br>";
-        echo "Имя бота: <b>" . $data['result']['first_name'] . "</b><br>";
-        echo "Username: @" . $data['result']['username'] . "<br>";
-    } else {
-        echo "❌ <span style='color: red;'>Токен неправильный!</span><br>";
+    $result = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
+    curl_close($ch);
+    
+    if ($result && $httpCode == 200) {
+        $response = json_decode($result, true);
+        
+        if (isset($response['ok']) && $response['ok']) {
+            echo json_encode(['success' => true, 'message' => 'Заявка успешно отправлена!']);
+            exit;
+        }
+    }
+}
+
+// СПОСОБ 2: file_get_contents
+if (ini_get('allow_url_fopen')) {
+    $options = [
+        'http' => [
+            'method' => 'POST',
+            'header' => 'Content-Type: application/x-www-form-urlencoded',
+            'content' => http_build_query($postData),
+            'timeout' => 10,
+            'ignore_errors' => true
+        ],
+        'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false
+        ]
+    ];
+    
+    $context = stream_context_create($options);
+    $result = @file_get_contents($telegramUrl, false, $context);
+    
+    if ($result) {
+        $response = json_decode($result, true);
+        
+        if (isset($response['ok']) && $response['ok']) {
+            echo json_encode(['success' => true, 'message' => 'Заявка успешно отправлена!']);
+            exit;
+        }
+    }
+}
+
+// СПОСОБ 3: Через GET запрос (последний шанс)
+$getText = $text;
+$getText = urlencode($getText);
+$getUrl = "https://api.telegram.org/bot" . BOT_TOKEN . "/sendMessage?chat_id=" . CHAT_ID . "&text=" . $getText;
+
+$result = @file_get_contents($getUrl);
+
+if ($result) {
+    $response = json_decode($result, true);
+    
+    if (isset($response['ok']) && $response['ok']) {
+        echo json_encode(['success' => true, 'message' => 'Заявка успешно отправлена!']);
         exit;
     }
 }
 
-echo "<hr>";
-echo "<h2>Шаг 2: Проверка chat_id</h2>";
-echo "Ваш chat_id: <b>$chatId</b><br>";
-
-if (empty($chatId) || $chatId == 'ВСТАВЬТЕ_ВАШ_CHAT_ID') {
-    echo "❌ <span style='color: red;'>Chat ID не указан!</span><br>";
-    exit;
-}
-
-echo "<hr>";
-echo "<h2>Шаг 3: Попытка отправить тестовое сообщение</h2>";
-
-$testMessage = "🧪 Тестовое сообщение\nВремя: " . date('H:i:s d.m.Y');
-$sendUrl = "https://api.telegram.org/bot$botToken/sendMessage";
-
-$postData = [
-    'chat_id' => $chatId,
-    'text' => $testMessage
-];
-
-$ch = curl_init($sendUrl);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$result = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-echo "HTTP код: <b>$httpCode</b><br>";
-echo "Ответ от Telegram:<br>";
-echo "<pre>";
-print_r(json_decode($result, true));
-echo "</pre>";
-
-$resultData = json_decode($result, true);
-
-if (isset($resultData['ok']) && $resultData['ok']) {
-    echo "✅ <span style='color: green; font-size: 20px;'>СООБЩЕНИЕ ОТПРАВЛЕНО!</span><br>";
-    echo "Проверьте Telegram - должно прийти сообщение от бота<br>";
-} else {
-    echo "❌ <span style='color: red; font-size: 20px;'>ОШИБКА!</span><br>";
-    
-    if (isset($resultData['description'])) {
-        echo "Описание ошибки: <b>" . $resultData['description'] . "</b><br><br>";
-        
-        // Расшифровка популярных ошибок
-        if (strpos($resultData['description'], 'chat not found') !== false) {
-            echo "💡 <b>Решение:</b> Неправильный chat_id. Убедитесь что:<br>";
-            echo "1. Вы нажали START у бота<br>";
-            echo "2. Chat_id правильный<br>";
-        }
-        
-        if (strpos($resultData['description'], 'bot was blocked') !== false) {
-            echo "💡 <b>Решение:</b> Вы заблокировали бота. Разблокируйте его в Telegram<br>";
-        }
-        
-        if (strpos($resultData['description'], 'Unauthorized') !== false) {
-            echo "💡 <b>Решение:</b> Неправильный токен бота<br>";
-        }
-    }
-}
-
-echo "<hr>";
-echo "<h2>Шаг 4: Проверка получения сообщений</h2>";
-$updatesUrl = "https://api.telegram.org/bot$botToken/getUpdates";
-$updates = @file_get_contents($updatesUrl);
-$updatesData = json_decode($updates, true);
-
-if (!empty($updatesData['result'])) {
-    echo "Найдено сообщений: " . count($updatesData['result']) . "<br>";
-    echo "<pre>";
-    print_r($updatesData);
-    echo "</pre>";
-} else {
-    echo "⚠️ <span style='color: orange;'>Нет сообщений от бота</span><br>";
-    echo "Напишите боту что-нибудь и обновите страницу<br>";
-}
-
-echo "<hr>";
-echo "<h2>📋 Чек-лист:</h2>";
-echo "<ol>";
-echo "<li>✓ Создали бота через @BotFather</li>";
-echo "<li>✓ Получили токен</li>";
-echo "<li>✓ Нашли бота в Telegram по username</li>";
-echo "<li>✓ Нажали START</li>";
-echo "<li>✓ Написали боту сообщение</li>";
-echo "<li>✓ Получили свой chat_id</li>";
-echo "<li>✓ Вставили токен и chat_id в этот файл</li>";
-echo "</ol>";
+// Если ничего не сработало
+http_response_code(500);
+echo json_encode([
+    'success' => false, 
+    'message' => 'Ошибка отправки. Свяжитесь через Telegram/WhatsApp',
+    'debug' => [
+        'curl' => function_exists('curl_init') ? 'available' : 'not available',
+        'fopen' => ini_get('allow_url_fopen') ? 'enabled' : 'disabled',
+        'curl_error' => $curlError ?? 'no error',
+        'http_code' => $httpCode ?? 'unknown'
+    ]
+]);
 ?>
