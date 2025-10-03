@@ -238,6 +238,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+            margin-top: 3rem;
         }
 
         .review-card {
@@ -265,6 +266,21 @@
         .review-text {
             font-style: italic;
             line-height: 1.6;
+        }
+
+        .review-form-wrapper {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .review-form-wrapper h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .contact {
@@ -404,7 +420,7 @@
                     <button class="primary-button" onclick="scrollToContact()">Записаться на консультацию</button>
                 </div>
                 <div class="hero-image">
-                    <img src="https://i.postimg.cc/Nfg2DZm3/54643479251aa0d70251b062e15398ac-banana-image-783773797-dbbd9c7f-1756997162.png" alt="Юлия - психолог" class="profile-photo">
+                    <img src="https://i.postimg.cc/Nfg2DZm3/54643479251aa0d70251b062e15398ac-banana-image-783773797-dbbd9c7f-1756997162.png" alt="Ю��ия - психолог" class="profile-photo">
                 </div>
             </div>
         </div>
@@ -416,7 +432,7 @@
             <p class="about-text">
                 Помогаю людям обрести гармонию с собой и окружающим миром. 
                 Работаю с индивидуальными запросами, семейными и сексуальными отношениями, 
-                психосоматикой и энергетическими блоками. Использую интегративный подход, 
+                психосоматикой и энергетическими блоками. Использую инте��ративный подход, 
                 сочетающий классическую психологию, телесно-ориентированную терапию и энергопрактики.
             </p>
             <div class="credentials">
@@ -482,6 +498,28 @@
     <section id="reviews" class="reviews">
         <div class="container">
             <h2>Отзывы клиентов</h2>
+            
+            <!-- Форма добавления отзыва -->
+            <div class="review-form-wrapper">
+                <h3>Оставить отзыв</h3>
+                <form id="reviewForm" class="contact-form">
+                    <input type="hidden" name="formType" value="review">
+                    <input type="text" name="name" placeholder="Ваше имя (необязательно)">
+                    <select name="rating" required>
+                        <option value="">Выберите оценку *</option>
+                        <option value="5">⭐⭐⭐⭐⭐ (5 звёзд)</option>
+                        <option value="4">⭐⭐⭐⭐ (4 звезды)</option>
+                        <option value="3">⭐⭐⭐ (3 звезды)</option>
+                        <option value="2">⭐⭐ (2 звезды)</option>
+                        <option value="1">⭐ (1 звезда)</option>
+                    </select>
+                    <textarea name="review" placeholder="Ваш отзыв *" rows="4" required></textarea>
+                    <button type="submit" class="submit-button">Отправить отзыв</button>
+                </form>
+                <div id="reviewFormMessage" class="form-message"></div>
+            </div>
+
+            <!-- Существующие отзывы -->
             <div class="reviews-grid">
                 <div class="review-card">
                     <div class="review-header">
@@ -530,6 +568,7 @@
                 </div>
                 <div class="contact-form-wrapper">
                     <form id="appointmentForm" class="contact-form">
+                        <input type="hidden" name="formType" value="appointment">
                         <input type="text" name="name" placeholder="Ваше имя *" required>
                         <input type="email" name="email" placeholder="Email *" required>
                         <input type="tel" name="phone" placeholder="Телефон *" required>
@@ -570,23 +609,33 @@
             });
         });
 
+        // 🎯 ВСТАВЬТЕ СЮ��А ВАШ URL ИЗ GOOGLE APPS SCRIPT
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxy8DadqbogQP35DzqBH5BH0UeoTA0AO6Z9jk2gGMOYNhZmwLLCRsuOS_7uYU8XxemjGQ/exec';
+
+        // Форма заявки
         document.getElementById('appointmentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            const submitButton = this.querySelector('.submit-button');
-            const messageDiv = document.getElementById('formMessage');
-            
-            // 🎯🎯🎯 ВСТАВЬТЕ СЮДА ВАШ URL, СКОПИРОВАННЫЙ ИЗ GOOGLE APPS SCRIPT 🎯🎯🎯
-            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxy8DadqbogQP35DzqBH5BH0UeoTA0AO6Z9jk2gGMOYNhZmwLLCRsuOS_7uYU8XxemjGQ/exec';
+            await handleFormSubmit(this, 'formMessage', 'Заявка успешно отправлена!');
+        });
 
+        // Форма отзывов
+        document.getElementById('reviewForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            await handleFormSubmit(this, 'reviewFormMessage', 'Спасибо за ваш отзыв!');
+        });
+
+        // Универсальная функция отправки
+        async function handleFormSubmit(form, messageId, successText) {
+            const submitButton = form.querySelector('.submit-button');
+            const messageDiv = document.getElementById(messageId);
+            
             submitButton.disabled = true;
             submitButton.textContent = 'Отправка...';
             
-            const formData = new FormData(this);
+            const formData = new FormData(form);
             const data = Object.fromEntries(formData);
             
             try {
-                // Отправляем данные на наш Google Script
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     body: JSON.stringify(data)
@@ -595,9 +644,9 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    messageDiv.textContent = '✅ ' + result.message;
+                    messageDiv.textContent = '✅ ' + successText;
                     messageDiv.className = 'form-message success';
-                    this.reset();
+                    form.reset();
                 } else {
                     throw new Error(result.message || 'Ошибка отправки');
                 }
@@ -607,14 +656,13 @@
                 messageDiv.className = 'form-message error';
             } finally {
                 submitButton.disabled = false;
-                submitButton.textContent = 'Отправить заявку';
+                submitButton.textContent = form.id === 'reviewForm' ? 'Отправить отзыв' : 'Отправить заявку';
                 
                 setTimeout(() => {
                     messageDiv.style.display = 'none';
                 }, 6000);
             }
-        });
+        }
     </script>
 </body>
 </html>
-
