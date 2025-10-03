@@ -595,7 +595,6 @@
             document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Плавная прокрутка по якорям
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -604,7 +603,6 @@
             });
         });
 
-        // Клик по карточке услуги → прокрутка к форме + выбор услуги
         document.querySelectorAll('.service-card').forEach(card => {
             card.addEventListener('click', () => {
                 const serviceValue = card.getAttribute('data-service');
@@ -616,19 +614,18 @@
             });
         });
 
-        // Отправка формы записи
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxy8DadqbogQP35DzqBH5BH0UeoTA0AO6Z9jk2gGMOYNhZmwLLCRsuOS_7uYU8XxemjGQ/exec';
+
         document.getElementById('appointmentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const submitButton = this.querySelector('.submit-button');
             const messageDiv = document.getElementById('formMessage');
-            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxy8DadqbogQP35DzqBH5BH0UeoTA0AO6Z9jk2gGMOYNhZmwLLCRsuOS_7uYU8XxemjGQ/exec';
-
             submitButton.disabled = true;
             submitButton.textContent = 'Отправка...';
 
             const formData = new FormData(this);
             const data = Object.fromEntries(formData);
-            data.formType = 'appointment'; // маркер типа формы
+            data.formType = 'appointment';
 
             try {
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
@@ -656,19 +653,16 @@
             }
         });
 
-        // Отправка формы отзыва
         document.getElementById('reviewForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const submitButton = this.querySelector('.submit-button');
             const messageDiv = document.getElementById('reviewMessage');
-            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxy8DadqbogQP35DzqBH5BH0UeoTA0AO6Z9jk2gGMOYNhZmwLLCRsuOS_7uYU8XxemjGQ/exec';
-
             submitButton.disabled = true;
             submitButton.textContent = 'Отправка...';
 
             const formData = new FormData(this);
             const data = Object.fromEntries(formData);
-            data.formType = 'review'; // маркер типа формы
+            data.formType = 'review';
 
             try {
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
