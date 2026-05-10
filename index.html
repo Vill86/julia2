@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Юлия — Психолог, Сексолог, Телесный терапевт</title>
+    <style>
+        :root {
+            --bg: oklch(99% 0.002 240);
+            --surface: oklch(100% 0 0);
+            --fg: oklch(18% 0.012 250);
+            --muted: oklch(54% 0.012 250);
+            --border: oklch(92% 0.005 250);
+            --accent: oklch(58% 0.18 255);
+            
+            --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', system-ui, sans-serif;
+            
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --container-width: 1100px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--fg);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--fg); }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 24px;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--muted);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-image-container {
+            aspect-ratio: 4/5;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--fg);
+            color: var(--surface);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Services Section */
+        .section { padding: 100px 0; }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: var(--radius-md);
+            transition: border-color 0.3s;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .service-card p {
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        /* Pricing */
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            text-align: center;
+            padding: 40px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            background: var(--surface);
+        }
+
+        .price-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--muted);
+        }
+
+        .price-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .price-value span {
+            font-size: 1rem;
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        /* Reviews */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .review-card {
+            background: var(--surface);
+            padding: 32px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .review-text {
+            font-style: italic;
+            color: var(--fg);
+            margin-bottom: 20px;
+        }
+
+        .review-author {
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .review-author::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        /* Contacts Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            text-decoration: none;
+            color: var(--fg);
+            transition: color 0.2s;
+        }
+
+        .contact-method:hover {
+            color: var(--accent);
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .contact-details h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .contact-details p {
+            color: var(--muted);
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 60px 0;
+            }
+            .hero-content p {
+                margin: 0 auto 40px;
+            }
+            .nav-links { display: none; }
+            .hero-image-container { order: -1; max-width: 400px; margin: 0 auto; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body id="top">
+
+    <nav>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <a href="#top" class="logo" id="logo">Юлия</a>
+            <div class="nav-links">
+                <a href="#services">Услуги</a>
+                <a href="#about">Обо мне</a>
+                <a href="#pricing">Стоимость</a>
+                <a href="#reviews">Отзывы</a>
+                <a href="#contacts">Контакты</a>
+            </div>
+            <a href="#booking" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.8rem;" id="nav-booking-btn">Записаться</a>
+        </div>
+    </nav>
+
+    <header class="container hero">
+        <div class="hero-content">
+            <h1 id="hero-title">Бережный путь к себе и гармонии</h1>
+            <p id="hero-subtitle">Профессиональная психологическая помощь, сексология и телесная терапия. Помогаю вернуть контакт с собой и партнером.</p>
+            <a href="#booking" class="btn btn-primary">Записаться на консультацию</a>
+        </div>
+        <div class="hero-image-container">
+            <img src="julia.jpg" alt="Юлия — психолог, сексолог">
+        </div>
+    </header>
+
+    <section id="services" class="section container">
+        <h2 class="section-title">Направления работы</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3 id="service-psych-title">Психология</h3>
+                <p id="service-psych-desc">Работа с тревожностью, депрессией, самооценкой и поиском жизненных смыслов. Создаем безопасное пространство для ваших изменений.</p>
+            </div>
+            <div class="service-card">
+                <h3 id="service-sex-title">Сексология</h3>
+                <p id="service-sex-desc">Решение интимных проблем, работа с либидо, сексуальными дисфункциями и гармонизация сексуальных отношений в паре.</p>
+            </div>
+            <div class="service-card">
+                <h3 id="service-body-title">Телесная терапия</h3>
+                <p id="service-body-desc">Освобождение от мышечных зажимов, работа с психосоматикой и стрессом через тело. Возвращаем ощущение жизни и энергии.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section" style="background: var(--surface);">
+        <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+            <div class="hero-image-container" style="aspect-ratio: 1/1; border-radius: 50%;">
+                <img src="julia.jpg" alt="Юлия — специалист">
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: center;">
+                <h2 id="about-title" style="font-size: 2.5rem; margin-bottom: 24px;">О специалисте</h2>
+                <p id="about-bio1" style="margin-bottom: 20px; color: var(--muted);">Меня зовут Юлия. Я практикую более 7 лет, объединяя классическую психологию с глубокими техниками телесной терапии и сексологии.</p>
+                <p id="about-bio2" style="margin-bottom: 30px; color: var(--muted);">Мой подход — это сочетание профессионального анализа и глубокого сопереживания. Я верю, что тело помнит всё, и работа с ним позволяет достичь результатов быстрее, чем только через разговоры.</p>
+                <div style="display: flex; gap: 20px; font-weight: 600;">
+                    <div id="about-badge1" style="background: var(--bg); padding: 8px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border);">✓ Стаж 7 лет</div>
+                    <div id="about-badge2" style="background: var(--bg); padding: 8px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border);">✓ Сертифицированный терапевт</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="section container">
+        <h2 class="section-title">Стоимость услуг</h2>
+        <div class="pricing-container">
+            <div class="price-card">
+                <h4 id="price-psych-title">Психология</h4>
+                <div class="price-value"><span id="price-psych-value">6 000</span> <span>₽ / сессия</span></div>
+            </div>
+            <div class="price-card" style="border-color: var(--accent); position: relative;">
+                <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; font-size: 0.7rem; padding: 2px 12px; border-radius: 10px; font-weight: 600;">ПОПУЛЯРНО</div>
+                <h4 id="price-sex-title">Сексология</h4>
+                <div class="price-value"><span id="price-sex-value">7 000</span> <span>₽ / сессия</span></div>
+            </div>
+            <div class="price-card">
+                <h4 id="price-body-title">Телесная терапия</h4>
+                <div class="price-value"><span id="price-body-value">8 000</span> <span>₽ / сессия</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="section container">
+        <h2 class="section-title">Отзывы клиентов</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <p class="review-text" id="review-1-text">«Благодаря Юлии я наконец-то смогла разобраться в своих границах и перестала чувствовать вину за свои желания. Очень бережный подход».</p>
+                <div class="review-author" id="review-1-author">Мария, 34 года</div>
+            </div>
+            <div class="review-card">
+                <p class="review-text" id="review-2-text">«Телесная терапия сработала удивительно быстро. Ушли зажимы в плечах, которые мучили годами, и пришло спокойствие в голове».</p>
+                <div class="review-author" id="review-2-author">Алексей, 41 год</div>
+            </div>
+            <div class="review-card">
+                <p class="review-text" id="review-3-text">«Мы с мужем пришли в кризисе. Юлия помогла нам услышать друг друга и заново открыть сексуальность в нашем браке».</p>
+                <div class="review-author" id="review-3-author">Елена и Игорь, семейная пара</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacts" class="section container">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2 id="contacts-title">Связаться со мной</h2>
+                <p id="contacts-intro" style="color: var(--muted); margin-bottom: 40px; font-size: 1.1rem;">Я открыта для ваших вопросов и готова поддержать вас на пути к изменениям. Выберите удобный способ связи.</p>
+                
+                <a href="#" id="wa-link" class="contact-method" target="_blank">
+                    <div class="contact-icon">WA</div>
+                    <div class="contact-details">
+                        <h4 id="wa-label">WhatsApp</h4>
+                        <p id="wa-text">Напишите мне, чтобы обсудить время записи</p>
+                    </div>
+                </a>
+
+                <a href="#" id="tg-link" class="contact-method" target="_blank">
+                    <div class="contact-icon">TG</div>
+                    <div class="contact-details">
+                        <h4 id="tg-label">Telegram</h4>
+                        <p id="tg-text">Для быстрой связи и вопросов</p>
+                    </div>
+                </a>
+
+                <a href="#" id="email-link" class="contact-method">
+                    <div class="contact-icon">✉</div>
+                    <div class="contact-details">
+                        <h4 id="email-label">Email</h4>
+                        <p id="email-text">Для подробных запросов</p>
+                    </div>
+                </a>
+            </div>
+            <div style="background: var(--surface); border: 1px solid var(--border); padding: 40px; border-radius: var(--radius-md);">
+                <h3 id="booking-box-title" style="margin-bottom: 20px;">Запись на прием</h3>
+                <p id="booking-box-text" style="color: var(--muted); margin-bottom: 24px;">Вы можете выбрать удобное время прямо сейчас, написав мне в один из мессенджеров выше.</p>
+                <div style="border-top: 1px solid var(--border); padding-top: 24px; color: var(--muted); font-size: 0.9rem;">
+                    <p><strong id="format-title">Формат работы:</strong></p>
+                    <p id="format-1">Онлайн (Zoom, Skype, Google Meet)</p>
+                    <p id="format-2">Личный прием в кабинете</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="booking" class="section container" style="text-align: center;">
+        <div style="background: var(--fg); color: var(--surface); padding: 80px 40px; border-radius: var(--radius-md);">
+            <h2 id="booking-title" style="font-size: 2.5rem; margin-bottom: 24px; color: var(--surface);">Готовы начать работу?</h2>
+            <p id="booking-subtitle" style="margin-bottom: 40px; opacity: 0.8; max-width: 600px; margin-left: auto; margin-right: auto;">Запишитесь на первую консультацию, чтобы обсудить ваш запрос и подобрать оптимальный формат работы.</p>
+            <a href="#contacts" class="btn" style="background: var(--surface); color: var(--fg);" id="booking-btn">Перейти к контактам</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p id="footer-copyright">&copy; 2024 Юлия — Психолог, Сексолог, Телесный терапевт. Все права защищены.</p>
+            <div style="margin-top: 16px; display: flex; justify-content: center; gap: 20px;">
+                <a href="#top" style="color: var(--muted); text-decoration: none;">Наверх ↑</a>
+                <a href="#contacts" style="color: var(--muted); text-decoration: none;">Контакты</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Load dynamic content from data.json
+        async function loadSiteContent() {
+            try {
+                // Check localStorage first (for admin preview)
+                const localData = localStorage.getItem('julia_site_data');
+                let data;
+                
+                if (localData) {
+                    data = JSON.parse(localData);
+                    console.log('%c[Site] Данные загружены из localStorage (режим предпросмотра)', 'color:#22c55e');
+                } else {
+                    const response = await fetch('data.json');
+                    if (!response.ok) throw new Error('data.json не найден');
+                    data = await response.json();
+                }
+
+                // Apply data to DOM
+                applyData(data);
+            } catch (error) {
+                console.log('%c[Site] Используются встроенные тексты (data.json не найден)', 'color:#888');
+                // Keep the original hardcoded texts if data.json is missing
+            }
+        }
+
+        function applyData(data) {
+            // Logo
+            const logo = document.getElementById('logo');
+            if (logo && data.logo) logo.textContent = data.logo;
+
+            // Hero
+            const heroTitle = document.getElementById('hero-title');
+            if (heroTitle && data.hero?.title) heroTitle.textContent = data.hero.title;
+            
+            const heroSubtitle = document.getElementById('hero-subtitle');
+            if (heroSubtitle && data.hero?.subtitle) heroSubtitle.textContent = data.hero.subtitle;
+
+            // Services
+            const psychTitle = document.getElementById('service-psych-title');
+            if (psychTitle && data.services?.psychology?.title) psychTitle.textContent = data.services.psychology.title;
+            
+            const psychDesc = document.getElementById('service-psych-desc');
+            if (psychDesc && data.services?.psychology?.description) psychDesc.textContent = data.services.psychology.description;
+
+            const sexTitle = document.getElementById('service-sex-title');
+            if (sexTitle && data.services?.sexology?.title) sexTitle.textContent = data.services.sexology.title;
+            
+            const sexDesc = document.getElementById('service-sex-desc');
+            if (sexDesc && data.services?.sexology?.description) sexDesc.textContent = data.services.sexology.description;
+
+            const bodyTitle = document.getElementById('service-body-title');
+            if (bodyTitle && data.services?.body?.title) bodyTitle.textContent = data.services.body.title;
+            
+            const bodyDesc = document.getElementById('service-body-desc');
+            if (bodyDesc && data.services?.body?.description) bodyDesc.textContent = data.services.body.description;
+
+            // About
+            const aboutTitle = document.getElementById('about-title');
+            if (aboutTitle && data.about?.title) aboutTitle.textContent = data.about.title;
+            
+            const aboutBio1 = document.getElementById('about-bio1');
+            if (aboutBio1 && data.about?.bio1) aboutBio1.textContent = data.about.bio1;
+            
+            const aboutBio2 = document.getElementById('about-bio2');
+            if (aboutBio2 && data.about?.bio2) aboutBio2.textContent = data.about.bio2;
+            
+            const badge1 = document.getElementById('about-badge1');
+            if (badge1 && data.about?.badge1) badge1.textContent = data.about.badge1;
+            
+            const badge2 = document.getElementById('about-badge2');
+            if (badge2 && data.about?.badge2) badge2.textContent = data.about.badge2;
+
+            // Pricing
+            const pricePsychTitle = document.getElementById('price-psych-title');
+            if (pricePsychTitle && data.pricing?.psychology?.title) pricePsychTitle.textContent = data.pricing.psychology.title || 'Психология';
+            
+            const pricePsychVal = document.getElementById('price-psych-value');
+            if (pricePsychVal && data.pricing?.psychology?.price) pricePsychVal.textContent = data.pricing.psychology.price;
+
+            const priceSexTitle = document.getElementById('price-sex-title');
+            if (priceSexTitle && data.pricing?.sexology?.title) priceSexTitle.textContent = data.pricing.sexology.title || 'Сексология';
+            
+            const priceSexVal = document.getElementById('price-sex-value');
+            if (priceSexVal && data.pricing?.sexology?.price) priceSexVal.textContent = data.pricing.sexology.price;
+
+            const priceBodyTitle = document.getElementById('price-body-title');
+            if (priceBodyTitle && data.pricing?.body?.title) priceBodyTitle.textContent = data.pricing.body.title || 'Телесная терапия';
+            
+            const priceBodyVal = document.getElementById('price-body-value');
+            if (priceBodyVal && data.pricing?.body?.price) priceBodyVal.textContent = data.pricing.body.price;
+
+            // Reviews
+            if (data.reviews && data.reviews.length >= 3) {
+                const r1Text = document.getElementById('review-1-text');
+                if (r1Text) r1Text.textContent = data.reviews[0].text;
+                
+                const r1Author = document.getElementById('review-1-author');
+                if (r1Author) r1Author.textContent = data.reviews[0].author;
+
+                const r2Text = document.getElementById('review-2-text');
+                if (r2Text) r2Text.textContent = data.reviews[1].text;
+                
+                const r2Author = document.getElementById('review-2-author');
+                if (r2Author) r2Author.textContent = data.reviews[1].author;
+
+                const r3Text = document.getElementById('review-3-text');
+                if (r3Text) r3Text.textContent = data.reviews[2].text;
+                
+                const r3Author = document.getElementById('review-3-author');
+                if (r3Author) r3Author.textContent = data.reviews[2].author;
+            }
+
+            // Contacts
+            const contactsTitle = document.getElementById('contacts-title');
+            if (contactsTitle && data.contacts?.title) contactsTitle.textContent = data.contacts.title;
+
+            const contactsIntro = document.getElementById('contacts-intro');
+            if (contactsIntro && data.contacts?.intro) contactsIntro.textContent = data.contacts.intro;
+
+            // WhatsApp
+            const waLink = document.getElementById('wa-link');
+            if (waLink && data.contacts?.whatsapp?.number) {
+                waLink.href = `https://wa.me/${data.contacts.whatsapp.number}`;
+            }
+            const waLabel = document.getElementById('wa-label');
+            if (waLabel && data.contacts?.whatsapp?.label) waLabel.textContent = data.contacts.whatsapp.label;
+            const waText = document.getElementById('wa-text');
+            if (waText && data.contacts?.whatsapp?.text) waText.textContent = data.contacts.whatsapp.text;
+
+            // Telegram
+            const tgLink = document.getElementById('tg-link');
+            if (tgLink && data.contacts?.telegram?.username) {
+                tgLink.href = `https://t.me/${data.contacts.telegram.username}`;
+            }
+            const tgLabel = document.getElementById('tg-label');
+            if (tgLabel && data.contacts?.telegram?.label) tgLabel.textContent = data.contacts.telegram.label;
+            const tgText = document.getElementById('tg-text');
+            if (tgText && data.contacts?.telegram?.text) tgText.textContent = data.contacts.telegram.text;
+
+            // Email
+            const emailLink = document.getElementById('email-link');
+            if (emailLink && data.contacts?.email?.address) {
+                emailLink.href = `mailto:${data.contacts.email.address}`;
+            }
+            const emailLabel = document.getElementById('email-label');
+            if (emailLabel && data.contacts?.email?.label) emailLabel.textContent = data.contacts.email.label;
+            const emailText = document.getElementById('email-text');
+            if (emailText && data.contacts?.email?.text) emailText.textContent = data.contacts.email.text;
+
+            // Booking box
+            const bookingBoxTitle = document.getElementById('booking-box-title');
+            if (bookingBoxTitle && data.contacts?.bookingTitle) bookingBoxTitle.textContent = data.contacts.bookingTitle;
+            
+            const bookingBoxText = document.getElementById('booking-box-text');
+            if (bookingBoxText && data.contacts?.bookingText) bookingBoxText.textContent = data.contacts.bookingText;
+
+            const formatTitle = document.getElementById('format-title');
+            if (formatTitle && data.contacts?.formatTitle) formatTitle.textContent = data.contacts.formatTitle;
+            
+            const format1 = document.getElementById('format-1');
+            if (format1 && data.contacts?.format1) format1.textContent = data.contacts.format1;
+            
+            const format2 = document.getElementById('format-2');
+            if (format2 && data.contacts?.format2) format2.textContent = data.contacts.format2;
+
+            // Booking CTA
+            const bookingTitle = document.getElementById('booking-title');
+            if (bookingTitle && data.booking?.title) bookingTitle.textContent = data.booking.title;
+            
+            const bookingSubtitle = document.getElementById('booking-subtitle');
+            if (bookingSubtitle && data.booking?.subtitle) bookingSubtitle.textContent = data.booking.subtitle;
+            
+            const bookingBtn = document.getElementById('booking-btn');
+            if (bookingBtn && data.booking?.btnText) bookingBtn.textContent = data.booking.btnText;
+
+            // Footer
+            const footerCopyright = document.getElementById('footer-copyright');
+            if (footerCopyright && data.footer?.copyright) footerCopyright.innerHTML = data.footer.copyright;
+
+            // Nav booking button
+            const navBooking = document.getElementById('nav-booking-btn');
+            if (navBooking && data.nav?.bookingBtn) navBooking.textContent = data.nav.bookingBtn;
+
+            console.log('%c[Site] Контент успешно обновлён из data.json', 'color:#22c55e');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadSiteContent);
+    </script>
+</body>
+</html>
