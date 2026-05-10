@@ -1,942 +1,583 @@
 <!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Админ-панель • Юлия</title>
-    <style>
-        :root {
-            --bg: oklch(99% 0.002 240);
-            --surface: oklch(100% 0 0);
-            --fg: oklch(18% 0.012 250);
-            --muted: oklch(54% 0.012 250);
-            --border: oklch(92% 0.005 250);
-            --accent: oklch(58% 0.18 255);
-            --radius-sm: 8px;
-            --radius-md: 16px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Админ-панель • Юлия</title>
+<style>
+:root {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --fg: #111111;
+    --muted: #666666;
+    --border: #e5e5e5;
+    --accent: #3b5cff;
+    --accent-soft: #eef2ff;
+}
+* { box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px; }
+header {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+header .container { display: flex; align-items: center; justify-content: space-between; }
+.logo { font-weight: 700; font-size: 1.4rem; color: var(--fg); text-decoration: none; }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+.login-screen {
+    max-width: 380px;
+    margin: 120px auto;
+    background: white;
+    border-radius: 28px;
+    padding: 40px 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    text-align: center;
+}
+.login-screen h1 { font-size: 1.6rem; margin-bottom: 8px; }
+.login-screen p { color: var(--muted); margin-bottom: 32px; }
+.login-screen input {
+    width: 100%; padding: 16px; border: 1px solid var(--border);
+    border-radius: 16px; font-size: 1.05rem; margin-bottom: 20px;
+}
+.login-screen button {
+    width: 100%; padding: 16px; background: var(--accent); color: white;
+    border: none; border-radius: 16px; font-weight: 600; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.2s;
+}
+.login-screen button:hover { background: #2a4be0; }
 
-        body {
-            background: var(--bg);
-            color: var(--fg);
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-            line-height: 1.6;
-        }
+.admin-panel { display: none; }
+.admin-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 32px;
+}
+.admin-header h1 { font-size: 1.8rem; }
+.logout-btn {
+    background: #ff4d4d; color: white; border: none; padding: 10px 20px;
+    border-radius: 999px; font-weight: 600; cursor: pointer;
+}
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+.section-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+}
+.section-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.section-card h2::before {
+    content: '';
+    width: 6px;
+    height: 24px;
+    background: var(--accent);
+    border-radius: 3px;
+}
 
-        header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+.form-group { margin-bottom: 18px; }
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: #444;
+}
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+.form-group textarea { min-height: 90px; resize: vertical; }
 
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.sub-section {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 18px;
+    margin-top: 18px;
+}
+.sub-section:first-child { border-top: none; padding-top: 0; margin-top: 0; }
 
-        .logo {
-            font-weight: 700;
-            font-size: 1.4rem;
-            color: var(--fg);
-            text-decoration: none;
-        }
+.save-bar {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 20px 0;
+    margin-top: 40px;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
+}
+.save-bar .container { display: flex; gap: 12px; flex-wrap: wrap; }
+.save-btn {
+    flex: 1;
+    min-width: 200px;
+    padding: 16px 32px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.save-btn:hover { background: #2a4be0; transform: translateY(-1px); }
+.secondary-btn {
+    flex: 1;
+    min-width: 180px;
+    padding: 16px 28px;
+    background: white;
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+}
 
-        .header-actions {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            border: none;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            background: var(--fg);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--accent);
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: var(--surface);
-            color: var(--fg);
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--accent);
-        }
-
-        .main {
-            padding: 40px 0 80px;
-        }
-
-        .login-container {
-            max-width: 420px;
-            margin: 80px auto;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 48px 40px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        .login-container h1 {
-            font-size: 1.8rem;
-            margin-bottom: 12px;
-        }
-
-        .login-container p {
-            color: var(--muted);
-            margin-bottom: 32px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .section {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            margin-bottom: 24px;
-            overflow: hidden;
-        }
-
-        .section-header {
-            padding: 20px 24px;
-            background: var(--bg);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-        }
-
-        .section-header h3 {
-            font-size: 1.15rem;
-            font-weight: 600;
-        }
-
-        .section-content {
-            padding: 24px;
-            display: none;
-        }
-
-        .section.open .section-content {
-            display: block;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .form-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .input-group {
-            margin-bottom: 16px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--muted);
-        }
-
-        .input-group input,
-        .input-group textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            font-size: 0.95rem;
-            font-family: inherit;
-            resize: vertical;
-        }
-
-        .input-group textarea {
-            min-height: 90px;
-        }
-
-        .input-group input:focus,
-        .input-group textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .review-block {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            margin-bottom: 16px;
-        }
-
-        .review-block:last-child {
-            margin-bottom: 0;
-        }
-
-        .review-block h4 {
-            font-size: 0.95rem;
-            margin-bottom: 12px;
-            color: var(--muted);
-        }
-
-        .save-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 16px 0;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-            z-index: 200;
-        }
-
-        .save-bar .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .status {
-            font-size: 0.9rem;
-            color: var(--muted);
-        }
-
-        .status.success {
-            color: #22c55e;
-            font-weight: 600;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .admin-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .admin-header .badge {
-            background: #fefce8;
-            color: #854d0e;
-            font-size: 0.75rem;
-            padding: 2px 10px;
-            border-radius: 9999px;
-            font-weight: 600;
-        }
-    </style>
+.result-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.result-modal.active { display: flex; }
+.result-content {
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    max-width: 620px;
+    width: 90%;
+    max-height: 80vh;
+    overflow: auto;
+}
+.result-content h3 { margin-bottom: 16px; }
+.result-content textarea {
+    width: 100%;
+    height: 320px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    resize: none;
+}
+.result-actions { display: flex; gap: 12px; margin-top: 20px; }
+.result-actions button {
+    flex: 1;
+    padding: 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.copy-btn { background: var(--accent); color: white; border: none; }
+.download-btn { background: #111; color: white; border: none; }
+.close-btn { background: #f0f0f0; color: #333; border: 1px solid #ddd; }
+</style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="admin-header">
-                    <a href="#" class="logo">Юлия</a>
-                    <span class="badge">АДМИН</span>
-                </div>
-                <div class="header-actions">
-                    <button onclick="logout()" class="btn btn-secondary">Выйти</button>
-                    <a href="psychologist-landing-v3.html" target="_blank" class="btn btn-primary">Открыть сайт →</a>
-                </div>
+<header>
+    <div class="container">
+        <a href="index.html" class="logo">Юлия • Админ</a>
+    </div>
+</header>
+
+<!-- Login Screen -->
+<div id="login-screen" class="login-screen">
+    <h1>Вход в админ-панель</h1>
+    <p>Введите пароль для редактирования сайта</p>
+    <input type="password" id="password-input" placeholder="Пароль" onkeypress="if(event.key === 'Enter') login()">
+    <button onclick="login()">Войти</button>
+    <p style="margin-top: 24px; font-size: 0.85rem; color: #999;">Пароль: admin2026</p>
+</div>
+
+<!-- Admin Panel -->
+<div id="admin-panel" class="admin-panel container">
+    <div class="admin-header">
+        <h1>Редактирование контента</h1>
+        <button class="logout-btn" onclick="logout()">Выйти</button>
+    </div>
+
+    <!-- Hero -->
+    <div class="section-card">
+        <h2>🦋 Главный экран (Hero)</h2>
+        <div class="form-group">
+            <label>Заголовок (можно использовать &lt;br&gt; для переноса)</label>
+            <textarea id="hero-title" placeholder="Бережный путь к себе и гармонии"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Подзаголовок</label>
+            <textarea id="hero-subtitle" placeholder="Психолог, сексолог и телесный терапевт. Стаж 7 лет"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Имя файла фото (в папке с сайтом)</label>
+            <input type="text" id="hero-image" value="julia.jpg">
+        </div>
+    </div>
+
+    <!-- Services -->
+    <div class="section-card">
+        <h2>📋 Направления работы</h2>
+        
+        <div class="sub-section">
+            <div class="form-group">
+                <label>1. Название</label>
+                <input type="text" id="service-0-title" value="Психология">
+            </div>
+            <div class="form-group">
+                <label>Описание</label>
+                <textarea id="service-0-desc">работа с тревогой, самооценкой и границами</textarea>
             </div>
         </div>
-    </header>
+        
+        <div class="sub-section">
+            <div class="form-group">
+                <label>2. Название</label>
+                <input type="text" id="service-1-title" value="Сексология">
+            </div>
+            <div class="form-group">
+                <label>Описание</label>
+                <textarea id="service-1-desc">гармонизация интимной жизни и сексуальности</textarea>
+            </div>
+        </div>
+        
+        <div class="sub-section">
+            <div class="form-group">
+                <label>3. Название</label>
+                <input type="text" id="service-2-title" value="Телесная терапия">
+            </div>
+            <div class="form-group">
+                <label>Описание</label>
+                <textarea id="service-2-desc">снятие зажимов и работа с психосоматикой</textarea>
+            </div>
+        </div>
+    </div>
 
-    <!-- Login Screen -->
-    <div id="login-screen">
-        <div class="login-container">
-            <h1>Вход в админ-панель</h1>
-            <p>Введите пароль для редактирования сайта</p>
-            
-            <form id="login-form" onsubmit="login(event)">
+    <!-- Pricing -->
+    <div class="section-card">
+        <h2>💰 Стоимость сессий</h2>
+        
+        <div class="sub-section">
+            <div class="form-group">
+                <label>Услуга 1 — Название</label>
+                <input type="text" id="price-0-title" value="Психология">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                 <div class="form-group">
-                    <label for="password">Пароль</label>
-                    <input type="password" id="password" placeholder="Введите пароль" required>
+                    <label>Длительность</label>
+                    <input type="text" id="price-0-duration" value="50 минут">
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Войти</button>
-            </form>
-            
-            <p style="margin-top: 24px; font-size: 0.8rem; color: var(--muted);">
-                Демо-пароль: <strong>admin2026</strong>
-            </p>
+                <div class="form-group">
+                    <label>Цена</label>
+                    <input type="text" id="price-0-price" value="6 000 ₽">
+                </div>
+            </div>
+        </div>
+        
+        <div class="sub-section">
+            <div class="form-group">
+                <label>Услуга 2 (популярная) — Название</label>
+                <input type="text" id="price-1-title" value="Сексология">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                    <label>Длительность</label>
+                    <input type="text" id="price-1-duration" value="50 минут">
+                </div>
+                <div class="form-group">
+                    <label>Цена</label>
+                    <input type="text" id="price-1-price" value="7 000 ₽">
+                </div>
+            </div>
+        </div>
+        
+        <div class="sub-section">
+            <div class="form-group">
+                <label>Услуга 3 — Название</label>
+                <input type="text" id="price-2-title" value="Телесная терапия">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                    <label>Длительность</label>
+                    <input type="text" id="price-2-duration" value="60 минут">
+                </div>
+                <div class="form-group">
+                    <label>Цена</label>
+                    <input type="text" id="price-2-price" value="8 000 ₽">
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Admin Panel -->
-    <div id="admin-panel" class="hidden">
-        <div class="container main">
-            <div style="margin-bottom: 32px;">
-                <h1 style="font-size: 2rem; margin-bottom: 8px;">Редактирование контента</h1>
-                <p style="color: var(--muted);">Изменяйте тексты ниже. После сохранения скачайте data.json и замените файл на сервере.</p>
-            </div>
+    <!-- Reviews -->
+    <div class="section-card">
+        <h2>💬 Отзывы клиентов (4 шт.)</h2>
+        
+        <div id="reviews-forms"></div>
+    </div>
 
-            <!-- HERO -->
-            <div class="section" id="section-hero">
-                <div class="section-header" onclick="toggleSection(this)">
-                    <h3>🦋 Главный экран (Hero)</h3>
-                    <span>▼</span>
-                </div>
-                <div class="section-content">
-                    <div class="input-group">
-                        <label>Заголовок</label>
-                        <input type="text" id="hero-title" value="">
-                    </div>
-                    <div class="input-group">
-                        <label>Подзаголовок</label>
-                        <textarea id="hero-subtitle"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SERVICES -->
-            <div class="section" id="section-services">
-                <div class="section-header" onclick="toggleSection(this)">
-                    <h3>💼 Направления работы</h3>
-                    <span>▼</span>
-                </div>
-                <div class="section-content">
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Психология — заголовок</label>
-                            <input type="text" id="service-psych-title" value="">
-                        </div>
-                        <div class="input-group">
-                            <label>Сексология — заголовок</label>
-                            <input type="text" id="service-sex-title" value="">
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>Психология — описание</label>
-                        <textarea id="service-psych-desc"></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label>Сексология — описание</label>
-                        <textarea id="service-sex-desc"></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Телесная терапия — заголовок</label>
-                            <input type="text" id="service-body-title" value="">
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>Телесная терапия — описание</label>
-                        <textarea id="service-body-desc"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ABOUT -->
-            <div class="section" id="section-about">
-                <div class="section-header" onclick="toggleSection(this)">
-                    <h3>👩‍⚕️ Обо мне</h3>
-                    <span>▼</span>
-                </div>
-                <div class="section-content">
-                    <div class="input-group">
-                        <label>Заголовок раздела</label>
-                        <input type="text" id="about-title" value="">
-                    </div>
-                    <div class="input-group">
-                        <label>Первый абзац</label>
-                        <textarea id="about-bio1"></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label>Второй абзац</label>
-                        <textarea id="about-bio2"></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Бейдж 1</label>
-                            <input type="text" id="about-badge1" value="">
-                        </div>
-                        <div class="input-group">
-                            <label>Бейдж 2</label>
-                            <input type="text" id="about-badge2" value="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PRICING -->
-            <div class="section" id="section-pricing">
-                <div class="section-header" onclick="toggleSection(this)">
-                    <h3>💰 Стоимость услуг</h3>
-                    <span>▼</span>
-                </div>
-                <div class="section-content">
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Психология — цена (только число)</label>
-                            <input type="text" id="price-psych" value="">
-                        </div>
-                        <div class="input-group">
-                            <label>Сексология — цена (только число)</label>
-                            <input type="text" id="price-sex" value="">
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>Телесная терапия — цена (только число)</label>
-                        <input type="text" id="price-body" value="">
-                    </div>
-                    <p style="font-size: 0.85rem; color: var(--muted); margin-top: 8px;">
-                        Цены отображаются как «6 000 ₽ / сессия». Единица измерения фиксирована.
-                    </p>
-                </div>
-            </div>
-
-            <!-- REVIEWS -->
-            <div class="section" id="section-reviews">
-                <div class="section-header" onclick="toggleSection(this)">
-                    <h3>💬 Отзывы клиентов</h3>
-                    <span>▼</span>
-                </div>
-                <div class="section-content">
-                    <div class="review-block">
-                        <h4>Отзыв #1</h4>
-                        <div class="input-group">
-                            <label>Текст отзыва</label>
-                            <textarea id="review-1-text"></textarea>
-                        </div>
-                        <div class="input-group">
-                            <label>Автор</label>
-                            <input type="text" id="review-1-author" value="">
-                        </div>
-                    </div>
-                    <div class="review-block">
-                        <h4>Отзыв #2</h4>
-                        <div class="input-group">
-                            <label>Текст отзыва</label>
-                            <textarea id="review-2-text"></textarea>
-                        </div>
-                        <div class="input-group">
-                            <label>Автор</label>
-                            <input type="text" id="review-2-author" value="">
-                        </div>
-                    </div>
-                    <div class="review-block">
-                        <h4>Отзыв #3</h4>
-                        <div class="input-group">
-                            <label>Текст отзыва</label>
-                            <textarea id="review-3-text"></textarea>
-                        </div>
-                        <div class="input-group">
-                            <label>Автор</label>
-                            <input type="text" id="review-3-author" value="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CONTACTS -->
-            <div class="section" id="section-contacts">
-                <div class="section-header" onclick="toggleSection(this)">
-                    <h3>📞 Контакты</h3>
-                    <span>▼</span>
-                </div>
-                <div class="section-content">
-                    <div class="input-group">
-                        <label>Заголовок раздела</label>
-                        <input type="text" id="contacts-title" value="">
-                    </div>
-                    <div class="input-group">
-                        <label>Вступительный текст</label>
-                        <textarea id="contacts-intro"></textarea>
-                    </div>
-                    
-                    <div style="margin: 20px 0 12px; font-weight: 600; font-size: 0.95rem;">WhatsApp</div>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Номер телефона (без +)</label>
-                            <input type="text" id="wa-number" value="">
-                        </div>
-                        <div class="input-group">
-                            <label>Описание</label>
-                            <input type="text" id="wa-text" value="">
-                        </div>
-                    </div>
-                    
-                    <div style="margin: 20px 0 12px; font-weight: 600; font-size: 0.95rem;">Telegram</div>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Username (без @)</label>
-                            <input type="text" id="tg-username" value="">
-                        </div>
-                        <div class="input-group">
-                            <label>Описание</label>
-                            <input type="text" id="tg-text" value="">
-                        </div>
-                    </div>
-                    
-                    <div style="margin: 20px 0 12px; font-weight: 600; font-size: 0.95rem;">Email</div>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Адрес email</label>
-                            <input type="text" id="email-address" value="">
-                        </div>
-                        <div class="input-group">
-                            <label>Описание</label>
-                            <input type="text" id="email-text" value="">
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border);">
-                        <div class="input-group">
-                            <label>Заголовок блока «Запись на прием»</label>
-                            <input type="text" id="booking-box-title" value="">
-                        </div>
-                        <div class="input-group">
-                            <label>Текст блока записи</label>
-                            <textarea id="booking-box-text"></textarea>
-                        </div>
-                        <div class="input-group">
-                            <label>Формат работы — заголовок</label>
-                            <input type="text" id="format-title" value="">
-                        </div>
-                        <div class="form-row">
-                            <div class="input-group">
-                                <label>Формат 1</label>
-                                <input type="text" id="format-1" value="">
-                            </div>
-                            <div class="input-group">
-                                <label>Формат 2</label>
-                                <input type="text" id="format-2" value="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- BOOKING CTA -->
-            <div class="section" id="section-booking">
-                <div class="section-header" onclick="toggleSection(this)">
-                    <h3>🚀 Призыв к действию (нижний блок)</h3>
-                    <span>▼</span>
-                </div>
-                <div class="section-content">
-                    <div class="input-group">
-                        <label>Заголовок</label>
-                        <input type="text" id="booking-title" value="">
-                    </div>
-                    <div class="input-group">
-                        <label>Текст</label>
-                        <textarea id="booking-subtitle"></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label>Текст кнопки</label>
-                        <input type="text" id="booking-btn" value="">
-                    </div>
-                </div>
-            </div>
-
-            <!-- FOOTER -->
-            <div class="section" id="section-footer">
-                <div class="section-header" onclick="toggleSection(this)">
-                    <h3>📄 Футер</h3>
-                    <span>▼</span>
-                </div>
-                <div class="section-content">
-                    <div class="input-group">
-                        <label>Текст копирайта</label>
-                        <input type="text" id="footer-copyright" value="">
-                    </div>
-                </div>
-            </div>
-
+    <!-- Contacts -->
+    <div class="section-card">
+        <h2>📞 Контакты и мессенджеры</h2>
+        
+        <div class="form-group">
+            <label>Номер телефона (для отображения)</label>
+            <input type="text" id="contact-phone" value="+7 (900) 123-45-67">
+        </div>
+        <div class="form-group">
+            <label>Номер для звонка (без пробелов, +7...)</label>
+            <input type="text" id="contact-phone-tel" value="+79001234567">
+        </div>
+        <div class="form-group">
+            <label>WhatsApp номер (только цифры)</label>
+            <input type="text" id="contact-whatsapp" value="79001234567">
+        </div>
+        <div class="form-group">
+            <label>Telegram username (без @)</label>
+            <input type="text" id="contact-telegram" value="your_username">
         </div>
     </div>
 
-    <!-- Save Bar -->
-    <div id="save-bar" class="save-bar hidden">
+    <div class="save-bar">
         <div class="container">
-            <div class="status" id="save-status">Изменения не сохранены</div>
-            <div style="display: flex; gap: 12px;">
-                <button onclick="saveToLocal()" class="btn btn-secondary">Сохранить локально (для теста)</button>
-                <button onclick="saveAndDownload()" class="btn btn-primary">💾 Скачать data.json</button>
-            </div>
+            <button class="save-btn" onclick="saveChanges()">💾 Сохранить изменения и скачать data.json</button>
+            <button class="secondary-btn" onclick="loadCurrentData()">🔄 Загрузить текущие данные</button>
         </div>
     </div>
+</div>
 
-    <script>
-        const PASSWORD = "admin2026";
-        let currentData = null;
+<!-- Result Modal -->
+<div id="result-modal" class="result-modal" onclick="if (event.target.id === 'result-modal') closeModal()">
+    <div class="result-content" onclick="event.stopImmediatePropagation()">
+        <h3>Готово! Скопируйте или скачайте файл</h3>
+        <p style="color: var(--muted); margin-bottom: 16px;">Замените содержимое файла <strong>data.json</strong> в папке сайта на этот текст:</p>
+        <textarea id="json-output" readonly></textarea>
+        <div class="result-actions">
+            <button class="copy-btn" onclick="copyJSON()">📋 Скопировать</button>
+            <button class="download-btn" onclick="downloadJSON()">⬇️ Скачать data.json</button>
+            <button class="close-btn" onclick="closeModal()">Закрыть</button>
+        </div>
+    </div>
+</div>
 
-        function toggleSection(header) {
-            const section = header.parentElement;
-            section.classList.toggle('open');
-        }
+<script>
+// Password
+const CORRECT_PASSWORD = 'admin2026';
 
-        function showAdminPanel() {
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('admin-panel').classList.remove('hidden');
-            document.getElementById('save-bar').classList.remove('hidden');
-            loadData();
-        }
+function login() {
+    const input = document.getElementById('password-input').value;
+    if (input === CORRECT_PASSWORD) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-panel').style.display = 'block';
+        loadCurrentData();
+    } else {
+        alert('Неверный пароль. Попробуйте ещё раз.');
+        document.getElementById('password-input').value = '';
+    }
+}
 
-        function login(e) {
-            e.preventDefault();
-            const pass = document.getElementById('password').value;
-            
-            if (pass === PASSWORD) {
-                showAdminPanel();
-            } else {
-                alert('Неверный пароль. Попробуйте ещё раз.');
-                document.getElementById('password').value = '';
-            }
-        }
+function logout() {
+    document.getElementById('admin-panel').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'block';
+    document.getElementById('password-input').value = '';
+}
 
-        function logout() {
-            if (confirm('Выйти из админ-панели?')) {
-                location.reload();
-            }
-        }
+// Create review forms dynamically
+function createReviewForms() {
+    const container = document.getElementById('reviews-forms');
+    container.innerHTML = '';
+    
+    for (let i = 0; i < 4; i++) {
+        const div = document.createElement('div');
+        div.className = 'sub-section';
+        div.innerHTML = `
+            <div class="form-group">
+                <label>Отзыв ${i + 1} — Текст</label>
+                <textarea id="review-${i}-text" placeholder="Текст отзыва..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Автор</label>
+                <input type="text" id="review-${i}-author" placeholder="— Имя, возраст">
+            </div>
+        `;
+        container.appendChild(div);
+    }
+}
 
-        async function loadData() {
-            try {
-                // Try to load from data.json
-                const response = await fetch('data.json');
-                if (!response.ok) throw new Error('Файл не найден');
-                
-                currentData = await response.json();
-                populateForm(currentData);
-                document.getElementById('save-status').textContent = 'Данные загружены из data.json';
-            } catch (err) {
-                console.warn('Не удалось загрузить data.json, используем дефолтные значения');
-                // Fallback to default data if file not found
-                currentData = getDefaultData();
-                populateForm(currentData);
-                document.getElementById('save-status').textContent = 'Используются значения по умолчанию (data.json не найден)';
-            }
-        }
-
-        function getDefaultData() {
-            return {
-                "logo": "Юлия",
-                "hero": {
-                    "title": "Бережный путь к себе и гармонии",
-                    "subtitle": "Профессиональная психологическая помощь, сексология и телесная терапия. Помогаю вернуть контакт с собой и партнером."
-                },
-                "services": {
-                    "psychology": { "title": "Психология", "description": "Работа с тревожностью, депрессией, самооценкой и поиском жизненных смыслов. Создаем безопасное пространство для ваших изменений." },
-                    "sexology": { "title": "Сексология", "description": "Решение интимных проблем, работа с либидо, сексуальными дисфункциями и гармонизация сексуальных отношений в паре." },
-                    "body": { "title": "Телесная терапия", "description": "Освобождение от мышечных зажимов, работа с психосоматикой и стрессом через тело. Возвращаем ощущение жизни и энергии." }
-                },
-                "about": {
-                    "title": "О специалисте",
-                    "bio1": "Меня зовут Юлия. Я практикую более 7 лет, объединяя классическую психологию с глубокими техниками телесной терапии и сексологии.",
-                    "bio2": "Мой подход — это сочетание профессионального анализа и глубокого сопереживания. Я верю, что тело помнит всё, и работа с ним позволяет достичь результатов быстрее, чем только через разговоры.",
-                    "badge1": "✓ Стаж 7 лет",
-                    "badge2": "✓ Сертифицированный терапевт"
-                },
-                "pricing": {
-                    "psychology": { "price": "6 000" },
-                    "sexology": { "price": "7 000", "popular": true },
-                    "body": { "price": "8 000" }
-                },
-                "reviews": [
-                    { "text": "«Благодаря Юлии я наконец-то смогла разобраться в своих границах и перестала чувствовать вину за свои желания. Очень бережный подход».", "author": "Мария, 34 года" },
-                    { "text": "«Телесная терапия сработала удивительно быстро. Ушли зажимы в плечах, которые мучили годами, и пришло спокойствие в голове».", "author": "Алексей, 41 год" },
-                    { "text": "«Мы с мужем пришли в кризисе. Юлия помогла нам услышать друг друга и заново открыть сексуальность в нашем браке».", "author": "Елена и Игорь, семейная пара" }
-                ],
-                "contacts": {
-                    "title": "Связаться со мной",
-                    "intro": "Я открыта для ваших вопросов и готова поддержать вас на пути к изменениям. Выберите удобный способ связи.",
-                    "whatsapp": { "number": "79000000000", "text": "Напишите мне, чтобы обсудить время записи" },
-                    "telegram": { "username": "username", "text": "Для быстрой связи и вопросов" },
-                    "email": { "address": "hello@julia.ru", "text": "Для подробных запросов" },
-                    "bookingTitle": "Запись на прием",
-                    "bookingText": "Вы можете выбрать удобное время прямо сейчас, написав мне в один из мессенджеров выше.",
-                    "formatTitle": "Формат работы:",
-                    "format1": "Онлайн (Zoom, Skype, Google Meet)",
-                    "format2": "Личный прием в кабинете"
-                },
-                "booking": {
-                    "title": "Готовы начать работу?",
-                    "subtitle": "Запишитесь на первую консультацию, чтобы обсудить ваш запрос и подобрать оптимальный формат работы.",
-                    "btnText": "Перейти к контактам"
-                },
-                "footer": {
-                    "copyright": "© 2024 Юлия — Психолог, Сексолог, Телесный терапевт. Все права защищены."
-                }
-            };
-        }
-
-        function populateForm(data) {
-            // Hero
-            document.getElementById('hero-title').value = data.hero?.title || '';
-            document.getElementById('hero-subtitle').value = data.hero?.subtitle || '';
-
-            // Services
-            document.getElementById('service-psych-title').value = data.services?.psychology?.title || '';
-            document.getElementById('service-psych-desc').value = data.services?.psychology?.description || '';
-            document.getElementById('service-sex-title').value = data.services?.sexology?.title || '';
-            document.getElementById('service-sex-desc').value = data.services?.sexology?.description || '';
-            document.getElementById('service-body-title').value = data.services?.body?.title || '';
-            document.getElementById('service-body-desc').value = data.services?.body?.description || '';
-
-            // About
-            document.getElementById('about-title').value = data.about?.title || '';
-            document.getElementById('about-bio1').value = data.about?.bio1 || '';
-            document.getElementById('about-bio2').value = data.about?.bio2 || '';
-            document.getElementById('about-badge1').value = data.about?.badge1 || '';
-            document.getElementById('about-badge2').value = data.about?.badge2 || '';
-
-            // Pricing
-            document.getElementById('price-psych').value = data.pricing?.psychology?.price || '';
-            document.getElementById('price-sex').value = data.pricing?.sexology?.price || '';
-            document.getElementById('price-body').value = data.pricing?.body?.price || '';
-
-            // Reviews
-            if (data.reviews && data.reviews.length >= 3) {
-                document.getElementById('review-1-text').value = data.reviews[0].text || '';
-                document.getElementById('review-1-author').value = data.reviews[0].author || '';
-                document.getElementById('review-2-text').value = data.reviews[1].text || '';
-                document.getElementById('review-2-author').value = data.reviews[1].author || '';
-                document.getElementById('review-3-text').value = data.reviews[2].text || '';
-                document.getElementById('review-3-author').value = data.reviews[2].author || '';
-            }
-
-            // Contacts
-            document.getElementById('contacts-title').value = data.contacts?.title || '';
-            document.getElementById('contacts-intro').value = data.contacts?.intro || '';
-            document.getElementById('wa-number').value = data.contacts?.whatsapp?.number || '';
-            document.getElementById('wa-text').value = data.contacts?.whatsapp?.text || '';
-            document.getElementById('tg-username').value = data.contacts?.telegram?.username || '';
-            document.getElementById('tg-text').value = data.contacts?.telegram?.text || '';
-            document.getElementById('email-address').value = data.contacts?.email?.address || '';
-            document.getElementById('email-text').value = data.contacts?.email?.text || '';
-            document.getElementById('booking-box-title').value = data.contacts?.bookingTitle || '';
-            document.getElementById('booking-box-text').value = data.contacts?.bookingText || '';
-            document.getElementById('format-title').value = data.contacts?.formatTitle || '';
-            document.getElementById('format-1').value = data.contacts?.format1 || '';
-            document.getElementById('format-2').value = data.contacts?.format2 || '';
-
-            // Booking
-            document.getElementById('booking-title').value = data.booking?.title || '';
-            document.getElementById('booking-subtitle').value = data.booking?.subtitle || '';
-            document.getElementById('booking-btn').value = data.booking?.btnText || '';
-
-            // Footer
-            document.getElementById('footer-copyright').value = data.footer?.copyright || '';
-        }
-
-        function collectFormData() {
-            return {
-                logo: "Юлия",
-                hero: {
-                    title: document.getElementById('hero-title').value,
-                    subtitle: document.getElementById('hero-subtitle').value
-                },
-                services: {
-                    psychology: {
-                        title: document.getElementById('service-psych-title').value,
-                        description: document.getElementById('service-psych-desc').value
-                    },
-                    sexology: {
-                        title: document.getElementById('service-sex-title').value,
-                        description: document.getElementById('service-sex-desc').value
-                    },
-                    body: {
-                        title: document.getElementById('service-body-title').value,
-                        description: document.getElementById('service-body-desc').value
-                    }
-                },
-                about: {
-                    title: document.getElementById('about-title').value,
-                    bio1: document.getElementById('about-bio1').value,
-                    bio2: document.getElementById('about-bio2').value,
-                    badge1: document.getElementById('about-badge1').value,
-                    badge2: document.getElementById('about-badge2').value
-                },
-                pricing: {
-                    psychology: { price: document.getElementById('price-psych').value },
-                    sexology: { price: document.getElementById('price-sex').value, popular: true },
-                    body: { price: document.getElementById('price-body').value }
-                },
-                reviews: [
-                    {
-                        text: document.getElementById('review-1-text').value,
-                        author: document.getElementById('review-1-author').value
-                    },
-                    {
-                        text: document.getElementById('review-2-text').value,
-                        author: document.getElementById('review-2-author').value
-                    },
-                    {
-                        text: document.getElementById('review-3-text').value,
-                        author: document.getElementById('review-3-author').value
-                    }
-                ],
-                contacts: {
-                    title: document.getElementById('contacts-title').value,
-                    intro: document.getElementById('contacts-intro').value,
-                    whatsapp: {
-                        number: document.getElementById('wa-number').value,
-                        text: document.getElementById('wa-text').value
-                    },
-                    telegram: {
-                        username: document.getElementById('tg-username').value,
-                        text: document.getElementById('tg-text').value
-                    },
-                    email: {
-                        address: document.getElementById('email-address').value,
-                        text: document.getElementById('email-text').value
-                    },
-                    bookingTitle: document.getElementById('booking-box-title').value,
-                    bookingText: document.getElementById('booking-box-text').value,
-                    formatTitle: document.getElementById('format-title').value,
-                    format1: document.getElementById('format-1').value,
-                    format2: document.getElementById('format-2').value
-                },
-                booking: {
-                    title: document.getElementById('booking-title').value,
-                    subtitle: document.getElementById('booking-subtitle').value,
-                    btnText: document.getElementById('booking-btn').value
-                },
-                footer: {
-                    copyright: document.getElementById('footer-copyright').value
-                }
-            };
-        }
-
-        function saveAndDownload() {
-            const newData = collectFormData();
-            
-            // Update current data
-            currentData = newData;
-
-            // Create downloadable JSON
-            const jsonStr = JSON.stringify(newData, null, 2);
-            const blob = new Blob([jsonStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'data.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            // Update status
-            const status = document.getElementById('save-status');
-            status.textContent = '✓ data.json скачан! Замените файл на сервере.';
-            status.classList.add('success');
-
-            setTimeout(() => {
-                status.textContent = 'Готово к новым изменениям';
-                status.classList.remove('success');
-            }, 4000);
-        }
-
-        function saveToLocal() {
-            const newData = collectFormData();
-            localStorage.setItem('julia_site_data', JSON.stringify(newData));
-            
-            const status = document.getElementById('save-status');
-            status.textContent = '✓ Сохранено в localStorage (для тестирования)';
-            status.classList.add('success');
-
-            setTimeout(() => {
-                status.textContent = 'Изменения сохранены локально';
-                status.classList.remove('success');
-            }, 2500);
-        }
-
-        // Auto-open first sections for convenience
-        function autoOpenSections() {
-            setTimeout(() => {
-                const firstSection = document.querySelector('.section');
-                if (firstSection) firstSection.classList.add('open');
-            }, 800);
-        }
-
-        // Keyboard shortcut for save
-        document.addEventListener('keydown', function(e) {
-            if (e.metaKey && e.key === 's') {
-                e.preventDefault();
-                saveAndDownload();
-            }
+// Load current data from data.json
+async function loadCurrentData() {
+    try {
+        const res = await fetch('data.json');
+        const data = await res.json();
+        
+        // Hero
+        document.getElementById('hero-title').value = data.hero.title || '';
+        document.getElementById('hero-subtitle').value = data.hero.subtitle || '';
+        document.getElementById('hero-image').value = data.hero.image || 'julia.jpg';
+        
+        // Services
+        data.services.forEach((s, i) => {
+            const titleEl = document.getElementById(`service-${i}-title`);
+            const descEl = document.getElementById(`service-${i}-desc`);
+            if (titleEl) titleEl.value = s.title || '';
+            if (descEl) descEl.value = s.description || '';
         });
+        
+        // Pricing
+        data.pricing.forEach((p, i) => {
+            const titleEl = document.getElementById(`price-${i}-title`);
+            const durEl = document.getElementById(`price-${i}-duration`);
+            const priceEl = document.getElementById(`price-${i}-price`);
+            if (titleEl) titleEl.value = p.title || '';
+            if (durEl) durEl.value = p.duration || '';
+            if (priceEl) priceEl.value = p.price || '';
+        });
+        
+        // Reviews
+        data.reviews.forEach((r, i) => {
+            const textEl = document.getElementById(`review-${i}-text`);
+            const authorEl = document.getElementById(`review-${i}-author`);
+            if (textEl) textEl.value = r.text || '';
+            if (authorEl) authorEl.value = r.author || '';
+        });
+        
+        // Contacts
+        document.getElementById('contact-phone').value = data.contacts.phone || '';
+        document.getElementById('contact-phone-tel').value = data.contacts.phone_tel || '';
+        document.getElementById('contact-whatsapp').value = data.contacts.whatsapp || '';
+        document.getElementById('contact-telegram').value = data.contacts.telegram || '';
+        
+    } catch (e) {
+        alert('Не удалось загрузить data.json. Убедитесь, что файл находится рядом с admin.html');
+        console.error(e);
+    }
+}
 
-        // Initialize
-        window.onload = function() {
-            // Check if already logged in via localStorage (optional)
-            const savedPass = localStorage.getItem('admin_logged_in');
-            if (savedPass === 'true') {
-                showAdminPanel();
-            }
-            
-            autoOpenSections();
-            
-            // Show hint about password in console
-            console.log('%c[Admin] Демо-пароль: admin2026', 'color:#888');
-        };
+// Collect all form data into JSON structure
+function collectData() {
+    const data = {
+        hero: {
+            title: document.getElementById('hero-title').value.trim(),
+            subtitle: document.getElementById('hero-subtitle').value.trim(),
+            image: document.getElementById('hero-image').value.trim() || 'julia.jpg'
+        },
+        services: [],
+        pricing: [],
+        reviews: [],
+        contacts: {
+            phone: document.getElementById('contact-phone').value.trim(),
+            phone_tel: document.getElementById('contact-phone-tel').value.trim(),
+            whatsapp: document.getElementById('contact-whatsapp').value.trim(),
+            telegram: document.getElementById('contact-telegram').value.trim()
+        }
+    };
+    
+    // Services
+    for (let i = 0; i < 3; i++) {
+        data.services.push({
+            title: document.getElementById(`service-${i}-title`).value.trim(),
+            description: document.getElementById(`service-${i}-desc`).value.trim()
+        });
+    }
+    
+    // Pricing
+    for (let i = 0; i < 3; i++) {
+        data.pricing.push({
+            title: document.getElementById(`price-${i}-title`).value.trim(),
+            duration: document.getElementById(`price-${i}-duration`).value.trim(),
+            price: document.getElementById(`price-${i}-price`).value.trim()
+        });
+    }
+    
+    // Reviews
+    for (let i = 0; i < 4; i++) {
+        const text = document.getElementById(`review-${i}-text`).value.trim();
+        const author = document.getElementById(`review-${i}-author`).value.trim();
+        if (text || author) {
+            data.reviews.push({ text, author });
+        }
+    }
+    
+    return data;
+}
 
-        // Optional: allow pressing Enter in password field
-        // Already handled by form submit
-    </script>
+// Save and show result
+function saveChanges() {
+    const data = collectData();
+    const jsonString = JSON.stringify(data, null, 2);
+    
+    // Show modal
+    const modal = document.getElementById('result-modal');
+    const output = document.getElementById('json-output');
+    output.value = jsonString;
+    modal.classList.add('active');
+}
+
+// Copy to clipboard
+function copyJSON() {
+    const textarea = document.getElementById('json-output');
+    textarea.select();
+    document.execCommand('copy');
+    
+    const btn = event.currentTarget;
+    const originalText = '📋 Скопировать';
+    // Quick feedback
+    const originalHTML = event.target.innerHTML;
+    event.target.innerHTML = '✅ Скопировано!';
+    setTimeout(() => {
+        event.target.innerHTML = originalHTML;
+    }, 1500);
+}
+
+// Download JSON file
+function downloadJSON() {
+    const jsonString = document.getElementById('json-output').value;
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'data.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function closeModal() {
+    document.getElementById('result-modal').classList.remove('active');
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    createReviewForms();
+    
+    // Optional: auto-focus password field
+    const passInput = document.getElementById('password-input');
+    if (passInput) passInput.focus();
+});
+</script>
 </body>
 </html>
