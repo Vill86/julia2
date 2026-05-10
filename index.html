@@ -30,6 +30,10 @@ header {
 }
 .logo { font-weight: 700; font-size: 1.2rem; color: var(--fg); text-decoration: none; }
 
+.desktop-nav { display: none; gap: 32px; }
+.desktop-nav a { color: var(--fg); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+.desktop-nav a:hover { color: var(--accent); }
+
 .hero { padding: 60px 0; text-align: center; }
 .hero-image-container {
     width: 220px; height: 220px; margin: 0 auto 32px; border-radius: 50%;
@@ -63,7 +67,7 @@ header {
 .contact-phone {
     background: white; border: 1px solid var(--border); border-radius: 28px;
     padding: 32px 24px; text-align: center; margin-bottom: 24px;
-    box-shadow: var(--shadow-soft);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
 }
 .contact-phone a.phone-number {
     font-size: 2.2rem; font-weight: 700; color: var(--fg); text-decoration: none;
@@ -95,70 +99,96 @@ header {
 }
 .nav-item { font-size: 0.75rem; color: var(--muted); text-decoration: none; transition: color 0.3s; }
 .nav-item.active { color: var(--accent); font-weight: 600; }
+
+/* Responsive styles */
+@media (min-width: 768px) {
+    .container { max-width: 960px; padding: 0 40px; }
+    
+    header .container { justify-content: space-between; }
+    .desktop-nav { display: flex; }
+    .bottom-nav { display: none; }
+    
+    .hero { 
+        display: flex; 
+        align-items: center; 
+        gap: 60px; 
+        text-align: left; 
+        padding: 80px 0; 
+    }
+    .hero-image-container { 
+        width: 320px; 
+        height: 320px; 
+        margin: 0; 
+        flex-shrink: 0; 
+    }
+    .hero-content { flex: 1; max-width: 520px; }
+    
+    .section { padding: 80px 0; }
+    .section-title { font-size: 2.2rem; margin-bottom: 50px; }
+    
+    .pricing-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+    
+    .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .price-card { margin-bottom: 0; }
+    
+    .service-chips { gap: 16px; }
+    .chip { flex: none; padding: 16px 28px; }
+}
+
+@media (min-width: 1024px) {
+    .container { max-width: 1100px; }
+    .hero-image-container { width: 360px; height: 360px; }
+}
 </style>
 </head>
 <body>
 
 <header>
-    <div class="container"><a href="#top" class="logo">Юлия</a></div>
+    <div class="container">
+        <a href="#top" class="logo">Юлия</a>
+        <nav class="desktop-nav">
+            <a href="#services">Направления</a>
+            <a href="#pricing">Стоимость</a>
+            <a href="#contacts">Запись</a>
+        </nav>
+    </div>
 </header>
 
 <main class="container">
 
     <!-- Hero -->
-    <section class="hero">
-        <div class="hero-image-container"><img src="julia.jpg" alt="Юлия"></div>
-        <h1 style="font-size:2.2rem; line-height:1.1; margin-bottom:16px;">Бережный путь<br>к себе и гармонии</h1>
-        <p style="color:var(--muted); max-width:320px; margin:0 auto 32px;">Психолог, сексолог и телесный терапевт.<br>Стаж 7 лет</p>
-        <a href="#contacts" class="call-btn" style="display:inline-block;">Записаться на сессию</a>
+    <section class="hero" id="top">
+        <div class="hero-image-container"><img src="julia.jpg" alt="Юлия" id="hero-image"></div>
+        <div class="hero-content">
+            <h1 id="hero-title" style="font-size:2.2rem; line-height:1.1; margin-bottom:16px;">Бережный путь<br>к себе и гармонии</h1>
+            <p id="hero-subtitle" style="color:var(--muted); max-width:320px; margin:0 auto 32px;">Психолог, сексолог и телесный терапевт.<br>Стаж 7 лет</p>
+            <a href="#contacts" class="call-btn" style="display:inline-block;">Записаться на сессию</a>
+        </div>
     </section>
 
     <!-- Услуги -->
     <section id="services" class="section">
         <h2 class="section-title">Направления</h2>
-        <div class="price-card"><strong style="color:var(--accent)">Психология</strong> — работа с тревогой, самооценкой и границами</div>
-        <div class="price-card"><strong style="color:var(--accent)">Сексология</strong> — гармонизация интимной жизни и сексуальности</div>
-        <div class="price-card"><strong style="color:var(--accent)">Телесная терапия</strong> — снятие зажимов и работа с психосоматикой</div>
+        <div id="services-list"></div>
     </section>
 
     <!-- Стоимость -->
     <section id="pricing" class="section">
         <h2 class="section-title">Стоимость</h2>
-        
-        <div class="price-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <div><strong style="font-size:1.1rem">Психология</strong><br><span style="font-size:0.9rem;color:#666">50 минут</span></div>
-                <div style="font-weight:700; font-size:1.5rem;">6 000 ₽</div>
-            </div>
-            <a href="#contacts" class="chip active" style="display:block; text-decoration:none;">Записаться</a>
-        </div>
-        
-        <div class="price-card" style="border-color:var(--accent); background:var(--accent-soft)">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <div><strong style="font-size:1.1rem">Сексология</strong><br><span style="font-size:0.9rem;color:#666">50 минут</span></div>
-                <div style="font-weight:700; font-size:1.5rem;">7 000 ₽</div>
-            </div>
-            <a href="#contacts" class="chip active" style="display:block; text-decoration:none;">Записаться</a>
-        </div>
-        
-        <div class="price-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <div><strong style="font-size:1.1rem">Телесная терапия</strong><br><span style="font-size:0.9rem;color:#666">60 минут</span></div>
-                <div style="font-weight:700; font-size:1.5rem;">8 000 ₽</div>
-            </div>
-            <a href="#contacts" class="chip active" style="display:block; text-decoration:none;">Записаться</a>
-        </div>
+        <div id="pricing-list" class="pricing-grid" style="display: grid; grid-template-columns: 1fr; gap: 20px;"></div>
     </section>
 
     <!-- Отзывы -->
     <section class="section">
         <h2 class="section-title">Отзывы клиентов</h2>
-        <div style="display:flex; flex-direction:column; gap:16px;">
-            <div class="price-card"><p style="font-style:italic; color:var(--fg)">"После работы с Юлией я наконец-то смогла сказать «нет» без чувства вины. Это изменило очень многое."</p><strong style="margin-top:12px; display:block; font-size:0.9rem; color:var(--muted)">— Мария, 34 года</strong></div>
-            <div class="price-card"><p style="font-style:italic; color:var(--fg)">"Телесная терапия помогла убрать зажимы в шее и плечах, которые были со мной много лет."</p><strong style="margin-top:12px; display:block; font-size:0.9rem; color:var(--muted)">— Алексей, 41 год</strong></div>
-            <div class="price-card"><p style="font-style:italic; color:var(--fg)">"Мы с мужем прошли сессии по сексологии. Вернули близость и понимание. Очень благодарны."</p><strong style="margin-top:12px; display:block; font-size:0.9rem; color:var(--muted)">— Елена и Игорь</strong></div>
-            <div class="price-card"><p style="font-style:italic; color:var(--fg)">"Пришла с паническими атаками. После нескольких сессий они почти исчезли. Работа очень бережная."</p><strong style="margin-top:12px; display:block; font-size:0.9rem; color:var(--muted)">— Анастасия, 29 лет</strong></div>
-        </div>
+        <div id="reviews-list" class="reviews-grid" style="display: flex; flex-direction: column; gap: 16px;"></div>
     </section>
 
     <!-- КОНТАКТЫ -->
@@ -168,8 +198,8 @@ header {
         <!-- Телефон -->
         <div class="contact-phone">
             <div style="color:var(--muted); font-size:0.95rem; margin-bottom:8px;">Позвонить напрямую</div>
-            <a href="tel:+79001234567" class="phone-number">+7 (900) 123-45-67</a>
-            <div style="margin-top:20px;"><a href="tel:+79001234567" class="call-btn">Позвонить</a></div>
+            <a href="tel:+79001234567" id="phone-number" class="phone-number">+7 (900) 123-45-67</a>
+            <div style="margin-top:20px;"><a href="tel:+79001234567" id="call-btn" class="call-btn">Позвонить</a></div>
         </div>
 
         <!-- Выбор услуги -->
@@ -210,6 +240,60 @@ header {
 
 <script>
 let selectedService = "Психология";
+let siteData = null;
+
+async function loadData() {
+    try {
+        const res = await fetch('data.json');
+        siteData = await res.json();
+        
+        // Hero
+        document.getElementById('hero-title').innerHTML = siteData.hero.title;
+        document.getElementById('hero-subtitle').innerHTML = siteData.hero.subtitle;
+        if (siteData.hero.image) {
+            document.getElementById('hero-image').src = siteData.hero.image;
+        }
+        
+        // Services
+        const servicesList = document.getElementById('services-list');
+        servicesList.innerHTML = siteData.services.map(s => 
+            `<div class="price-card"><strong style="color:var(--accent)">${s.title}</strong> — ${s.description}</div>`
+        ).join('');
+        
+        // Pricing
+        const pricingList = document.getElementById('pricing-list');
+        pricingList.innerHTML = siteData.pricing.map((p, index) => {
+            const isPopular = index === 1;
+            return `
+                <div class="price-card" style="${isPopular ? 'border-color:var(--accent); background:var(--accent-soft)' : ''}">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                        <div><strong style="font-size:1.1rem">${p.title}</strong><br><span style="font-size:0.9rem;color:#666">${p.duration}</span></div>
+                        <div style="font-weight:700; font-size:1.5rem;">${p.price}</div>
+                    </div>
+                    <a href="#contacts" class="chip active" style="display:block; text-decoration:none;">Записаться</a>
+                </div>
+            `;
+        }).join('');
+        
+        // Reviews
+        const reviewsList = document.getElementById('reviews-list');
+        reviewsList.innerHTML = siteData.reviews.map(r => 
+            `<div class="price-card"><p style="font-style:italic; color:var(--fg)">"${r.text}"</p><strong style="margin-top:12px; display:block; font-size:0.9rem; color:var(--muted)">${r.author}</strong></div>`
+        ).join('');
+        
+        // Contacts
+        const phoneEl = document.getElementById('phone-number');
+        phoneEl.textContent = siteData.contacts.phone;
+        phoneEl.href = `tel:${siteData.contacts.phone_tel}`;
+        
+        const callBtn = document.getElementById('call-btn');
+        callBtn.href = `tel:${siteData.contacts.phone_tel}`;
+        
+    } catch (e) {
+        console.error('Ошибка загрузки данных:', e);
+        // Fallback to original content if data.json fails
+    }
+}
 
 function selectService(element, service) {
     document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
@@ -218,14 +302,25 @@ function selectService(element, service) {
 }
 
 function openWhatsApp() {
+    if (!siteData) {
+        alert('Данные не загружены');
+        return;
+    }
     const message = encodeURIComponent(`Здравствуйте, Юлия! Хочу записаться на "${selectedService}".`);
-    window.open(`https://wa.me/79001234567?text=${message}`, '_blank');
+    window.open(`https://wa.me/${siteData.contacts.whatsapp}?text=${message}`, '_blank');
 }
 
 function openTelegram() {
+    if (!siteData) {
+        alert('Данные не загружены');
+        return;
+    }
     const message = encodeURIComponent(`Здравствуйте! Хочу записаться на "${selectedService}".`);
-    window.open(`https://t.me/your_username?text=${message}`, '_blank');
+    window.open(`https://t.me/${siteData.contacts.telegram}?text=${message}`, '_blank');
 }
+
+// Load data on page ready
+document.addEventListener('DOMContentLoaded', loadData);
 </script>
 </body>
 </html>
