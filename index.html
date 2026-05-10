@@ -316,6 +316,144 @@
             .nav-links { display: none; }
             .hero-image-container { order: -1; max-width: 400px; margin: 0 auto; }
             .contact-grid { grid-template-columns: 1fr; }
+            
+            /* Improved mobile styles */
+            .section { padding: 60px 0; }
+            .section-title { font-size: 2rem; margin-bottom: 40px; }
+            
+            .services-grid,
+            .reviews-grid,
+            .pricing-container {
+                gap: 16px;
+            }
+            
+            .service-card,
+            .review-card,
+            .price-card {
+                padding: 24px;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr !important;
+                gap: 40px !important;
+                text-align: center;
+            }
+            
+            .about-grid .hero-image-container {
+                margin: 0 auto;
+                max-width: 280px;
+            }
+            
+            .btn {
+                padding: 14px 28px;
+                font-size: 0.95rem;
+            }
+            
+            .contact-method {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .contact-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Smooth Animations */
+        .service-card,
+        .review-card,
+        .price-card {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.3s ease;
+            will-change: transform;
+        }
+        
+        .service-card:hover,
+        .review-card:hover,
+        .price-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15), 
+                        0 10px 10px -6px rgb(0 0 0 / 0.1);
+            border-color: var(--accent);
+        }
+        
+        .btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2);
+        }
+        
+        .contact-method {
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        
+        .contact-method:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+        
+        /* Scroll reveal animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Hero entrance animation */
+        .hero-content {
+            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+        
+        .hero-image-container {
+            animation: fadeInScale 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Touch-friendly improvements */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .service-card:active,
+        .review-card:active,
+        .price-card:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
@@ -348,7 +486,7 @@
 
     <section id="services" class="section container">
         <h2 class="section-title">Направления работы</h2>
-        <div class="services-grid">
+        <div class="services-grid animate-on-scroll">
             <div class="service-card">
                 <h3 id="service-psych-title">Психология</h3>
                 <p id="service-psych-desc">Работа с тревожностью, депрессией, самооценкой и поиском жизненных смыслов. Создаем безопасное пространство для ваших изменений.</p>
@@ -365,7 +503,7 @@
     </section>
 
     <section id="about" class="section" style="background: var(--surface);">
-        <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+        <div class="container about-grid animate-on-scroll" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
             <div class="hero-image-container" style="aspect-ratio: 1/1; border-radius: 50%;">
                 <img src="julia.jpg" alt="Юлия — специалист">
             </div>
@@ -383,7 +521,7 @@
 
     <section id="pricing" class="section container">
         <h2 class="section-title">Стоимость услуг</h2>
-        <div class="pricing-container">
+        <div class="pricing-container animate-on-scroll">
             <div class="price-card">
                 <h4 id="price-psych-title">Психология</h4>
                 <div class="price-value"><span id="price-psych-value">6 000</span> <span>₽ / сессия</span></div>
@@ -402,7 +540,7 @@
 
     <section id="reviews" class="section container">
         <h2 class="section-title">Отзывы клиентов</h2>
-        <div class="reviews-grid">
+        <div class="reviews-grid animate-on-scroll">
             <div class="review-card">
                 <p class="review-text" id="review-1-text">«Благодаря Юлии я наконец-то смогла разобраться в своих границах и перестала чувствовать вину за свои желания. Очень бережный подход».</p>
                 <div class="review-author" id="review-1-author">Мария, 34 года</div>
@@ -419,7 +557,7 @@
     </section>
 
     <section id="contacts" class="section container">
-        <div class="contact-grid">
+        <div class="contact-grid animate-on-scroll">
             <div class="contact-info">
                 <h2 id="contacts-title">Связаться со мной</h2>
                 <p id="contacts-intro" style="color: var(--muted); margin-bottom: 40px; font-size: 1.1rem;">Я открыта для ваших вопросов и готова поддержать вас на пути к изменениям. Выберите удобный способ связи.</p>
@@ -461,7 +599,7 @@
     </section>
 
     <section id="booking" class="section container" style="text-align: center;">
-        <div style="background: var(--fg); color: var(--surface); padding: 80px 40px; border-radius: var(--radius-md);">
+        <div class="animate-on-scroll" style="background: var(--fg); color: var(--surface); padding: 80px 40px; border-radius: var(--radius-md);">
             <h2 id="booking-title" style="font-size: 2.5rem; margin-bottom: 24px; color: var(--surface);">Готовы начать работу?</h2>
             <p id="booking-subtitle" style="margin-bottom: 40px; opacity: 0.8; max-width: 600px; margin-left: auto; margin-right: auto;">Запишитесь на первую консультацию, чтобы обсудить ваш запрос и подобрать оптимальный формат работы.</p>
             <a href="#contacts" class="btn" style="background: var(--surface); color: var(--fg);" id="booking-btn">Перейти к контактам</a>
@@ -665,7 +803,41 @@
         }
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', loadSiteContent);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSiteContent();
+            initScrollAnimations();
+        });
+
+        function initScrollAnimations() {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            
+            if (!('IntersectionObserver' in window)) {
+                // Fallback: show all immediately if no IntersectionObserver support
+                animatedElements.forEach(el => el.classList.add('visible'));
+                return;
+            }
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Optional: unobserve after animation to save resources
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15,  // Trigger when 15% visible
+                rootMargin: '0px 0px -50px 0px'  // Trigger a bit earlier
+            });
+            
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Also animate hero immediately (already has CSS animation)
+            const hero = document.querySelector('.hero');
+            if (hero) hero.style.opacity = '1';
+        }
     </script>
 </body>
 </html>
